@@ -25,6 +25,10 @@ console.log(days);
     let tempArr = [];
     for(let i =0; i<days.length; i++)
     {
+      //set id for each day object 
+      days[i].id = i+1;
+
+      //if day!=0, push object to temporary array, else push the whole temp array
       if(days[i].day !== 0) {
         tempArr.push(days[i]);
         // console.log(tempArr);
@@ -39,15 +43,18 @@ console.log(days);
 
     return (
       <div>
+        <div className="calendarHeader" style={{'display':'flex', 'justifyContent': 'space-around'}}>
+          <div>Su</div>
+          <div>Mo</div>
+          <div>Tu</div>
+          <div>We</div>
+          <div>Th</div>
+          <div>Fr</div>
+          <div>Sa</div>
+        </div>
         {
-          newArr.map(row => (
-            <DivRow>
-              {
-                row.map(days => (
-                  <DayBox day={days.date} />
-                ))
-              }
-            </DivRow>
+          newArr.map((row, index) => (
+            <DivRow key={index} rowData={row} firstLast={ index==0 ? 'first' : index==newArr.length-1 ? 'last' : '' }/>
           ))
           // days.map(day => (<DayBox day={day.date}/>))
         }

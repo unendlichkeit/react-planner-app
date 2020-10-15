@@ -1,0 +1,16 @@
+.divRow {
+    display: flex;
+    justify-content: space-around;
+
+    &.first {
+        justify-content: flex-end;
+    }
+
+    &.last {
+        justify-content: flex-start;
+    }
+
+    div {
+        flex: 1 1 200px;
+    }
+}
