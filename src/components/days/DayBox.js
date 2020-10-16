@@ -1,9 +1,12 @@
 import React from 'react';
 
-const DayBox = ({day}) => {
+const DayBox = ({day, empty}) => {
     return (
         <div>
-            <p>Day { day }</p>
+            {
+                empty ? '' : <p>Day { day }</p>
+            }
+            
         </div>
     )
 }
