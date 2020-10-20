@@ -1,5 +1,6 @@
 import React from 'react';
 import DayBox from './DayBox';
+
 import './DayRow.scss';
 
 const DivRow = ({rowData, firstLast}) => {
