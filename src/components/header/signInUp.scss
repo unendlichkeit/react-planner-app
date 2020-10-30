@@ -1,0 +1,72 @@
+@import '../assets/css/variables.scss';
+
+.signInBtn {
+    cursor: pointer;
+    color: $linkColor;
+}
+.outerFrame {
+    overflow: hidden;
+    height: calc(100vh - 25px);
+    width: 100%;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    transition: visibility 1s linear;
+
+    .signInFormBox {
+        height: 100%;
+        // position: absolute;
+        // top: 0;
+        width: 100%;
+        // background: #5cd48e;
+        overflow: hidden;
+        transform: translateY(100%);
+        // opacity: 0;
+    
+        &.animateOut {
+            animation-name: closeSignin;
+            animation-duration: .6s;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(1,-0.05,.94,.75);
+        }
+    
+        .animationBox {
+            height: 100%;
+            background: #d1f1f0;
+            box-shadow: 0px 0px 10px 1px gray;
+            transform: perspective(888px) rotateX(0deg);
+        }
+    }
+
+    &.show {
+        visibility: visible;
+
+        .signInFormBox {
+            animation-name: slideUp;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0,.93,1,1);            
+        }
+
+        .animationBox {
+            animation-name: popIn;
+            animation-duration: .5s;
+            animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
+        }
+    }
+}
+
+@keyframes popIn {
+    0% { transform: perspective(888px) rotateX(45deg) }
+    100% { transform: perspective(888px) rotateX(0deg) }
+}
+@keyframes slideUp {
+    0% { transform: translateY(100%) }
+    100% { transform: translateY(0%); }
+}
+@keyframes closeSignin {
+    0% { transform: translateY(0%) }
+    10% { transform: translateY(-30px) }
+    100% { transform: translateY(100%) }
+}
