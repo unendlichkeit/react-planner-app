@@ -13,10 +13,11 @@ import CalendarDayView from './components/days/CalendarDayView';
 import './App.scss';
 
 
+
 class App extends React.Component {
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, menuState, setCurrentDayClicked } = this.props;
 
     const userStateChange = auth.onAuthStateChanged( user => {
       console.log(user);
@@ -31,11 +32,26 @@ class App extends React.Component {
         setCurrentUser(user);
       }
     });
-    
-    // console.log(userStateChange);
+
   }
 
   render() {
+    // append/remove add task popup menu
+    const { menuState, setCurrentDayClicked } = this.props;
+    
+    let toAppend = document.createElement('div');
+    toAppend.appendChild(document.createTextNode('Add task +'));
+    if(menuState === "show")
+      setCurrentDayClicked.appendChild(toAppend);
+      // console.log('menuState = show');
+    else {
+      if(setCurrentDayClicked) {
+        console.log('setCurrentDayClicked is : ');
+        console.log(setCurrentDayClicked);
+        setCurrentDayClicked.removeChild(setCurrentDayClicked.lastChild); 
+      }
+     
+    }
 
     return (
       <div>
@@ -54,8 +70,11 @@ class App extends React.Component {
 const dispatchToProprs = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
-const mapStateToProps = ({user}) => ({
-  currentUser: user.currentUser
+
+const mapStateToProps = ({user, task}) => ({
+  currentUser: user.currentUser,
+  menuState: task.menuState,
+  setCurrentDayClicked: task.setCurrentDayClicked
 });
 
 export default connect(mapStateToProps, dispatchToProprs)(App);

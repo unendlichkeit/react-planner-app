@@ -33,10 +33,11 @@ for(let i =0; i<days.length; i++)
     // console.log(tempArr);
   }
   else {
-    newArr.push(tempArr);
     tempArr = [days[i]];
+    newArr.push(tempArr);
+    
   }
-  if(i===days.length-1) newArr.push(tempArr);
+  // if(i===days.length-1) newArr.push(tempArr);
 }
 
 export default newArr;

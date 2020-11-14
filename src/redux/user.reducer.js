@@ -3,7 +3,7 @@ const INITIAL_STATE = {
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
-    console.log(state, action);
+    // console.log(state, action);
 
     switch(action.type) {
         
