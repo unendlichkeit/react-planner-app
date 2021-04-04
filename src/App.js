@@ -1,67 +1,80 @@
 import React from 'react';
-import './App.css';
-import DayBox from './components/days/DayBox';
-import DivRow from './components/days/DivRow';
+import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
+import {auth} from './firebase/firebaseInit';
+import {connect} from 'react-redux';
+import {setCurrentUser} from './redux/setCurrentUser.action';
+
+
+import Header from './components/header/Header';
+import SignInAndUpPage from './components/header/SignInUp-page';
+import CalendarDayView from './components/days/CalendarDayView';
+
+
+import './App.scss';
+
 
 
 class App extends React.Component {
 
-  render() {
-    
-    let d = new Date(new Date().getFullYear(), new Date().getMonth());
+  componentDidMount() {
+    const { setCurrentUser, menuState, setCurrentDayClicked } = this.props;
 
-    let nrMonthsToDisplay = d.getMonth()+2;
-    let days = [];
-    while(d.getMonth() < nrMonthsToDisplay)
-    {
-      // console.log(d.getMonth(), d.getFullYear());
-      // console.log(nrMonthsToDisplay);
-      days.push( {day: d.getDay(), date: d.getDate()} );
-      d.setDate(d.getDate()+1);
-    }
-console.log(days);
+    const userStateChange = auth.onAuthStateChanged( user => {
+      console.log(user);
 
-    let newArr = [];
-    let tempArr = [];
-    for(let i =0; i<days.length; i++)
-    {
-      //set id for each day object 
-      days[i].id = i+1;
-
-      //if day!=0, push object to temporary array, else push the whole temp array
-      if(days[i].day !== 0) {
-        tempArr.push(days[i]);
-        // console.log(tempArr);
+      if(user) {
+        //user is signed in
+        setCurrentUser(user)
       }
       else {
-        newArr.push(tempArr);
-        tempArr = [days[i]];
+        console.log('user nu e logat ?!');
+        //user returneaza 'null' daca nu e logat
+        setCurrentUser(user);
       }
-      if(i===days.length-1) newArr.push(tempArr);
+    });
+
+  }
+
+  render() {
+    // append/remove add task popup menu
+    const { menuState, setCurrentDayClicked } = this.props;
+    
+    let toAppend = document.createElement('div');
+    toAppend.appendChild(document.createTextNode('Add task +'));
+    if(menuState === "show")
+      setCurrentDayClicked.appendChild(toAppend);
+      // console.log('menuState = show');
+    else {
+      if(setCurrentDayClicked) {
+        console.log('setCurrentDayClicked is : ');
+        console.log(setCurrentDayClicked);
+        setCurrentDayClicked.removeChild(setCurrentDayClicked.lastChild); 
+      }
+     
     }
-    console.log(newArr);
 
     return (
       <div>
-        <div className="calendarHeader" style={{'display':'flex', 'justifyContent': 'space-around'}}>
-          <div>Su</div>
-          <div>Mo</div>
-          <div>Tu</div>
-          <div>We</div>
-          <div>Th</div>
-          <div>Fr</div>
-          <div>Sa</div>
-        </div>
-        {
-          newArr.map((row, index) => (
-            <DivRow key={index} rowData={row} firstLast={ index==0 ? 'first' : index==newArr.length-1 ? 'last' : '' }/>
-          ))
-          // days.map(day => (<DayBox day={day.date}/>))
-        }
+        <HashRouter basename="/">
+          <Header/>
+
+          <Route exact path='/' component={CalendarDayView}/>
+          <Route exact path='/signIn' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<SignInAndUpPage />) } />
+        </HashRouter>
       </div>
     );
   }
   
 }
 
-export default App;
+const dispatchToProprs = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+const mapStateToProps = ({user, task}) => ({
+  currentUser: user.currentUser,
+  menuState: task.menuState,
+  setCurrentDayClicked: task.setCurrentDayClicked
+});
+
+export default connect(mapStateToProps, dispatchToProprs)(App);
