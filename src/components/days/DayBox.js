@@ -17,6 +17,7 @@ const DayBox = ({day, empty, menuStateAction}) => {
 
 const dispatchToProps = dispatch => ({
     menuStateAction: (event) => {
+        
         batch(()=>{
             dispatch(setMenuState);
             dispatch(setCurrentDayClicked(event.currentTarget));             
