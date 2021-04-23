@@ -5,7 +5,10 @@ const Task = ({currentDaySelected}) => {
     return (
         <div className='taskBox'>
             <p>add task and stuff</p>
-            { document.querySelector('.calendarHeader').appendChild(currentDaySelected) }
+            <div>
+                form here
+                <p>currentDaySelected node e inutil aici</p>
+            </div>
         </div>
     );
 }
