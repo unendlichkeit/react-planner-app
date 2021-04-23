@@ -2,7 +2,7 @@ import React from 'react';
 import newArr from '../../calendarDaysLogic';
 import monthsNames from '../../stuff/monthsNames';
 import {connect} from 'react-redux';
-import Task from '../tasks/TaskBox';
+import TaskBox from '../tasks/TaskBox';
 
 import DivRow from './DivRow';
 
@@ -35,7 +35,7 @@ const CalendarDayView = ({menuState}) => {
             }  
 
             {
-                menuState === "show" ? <Task/> : null
+                menuState === "show" ? <TaskBox/> : null
             }
 
         </div>      
