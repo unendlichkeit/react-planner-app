@@ -17,10 +17,10 @@ import './App.scss';
 class App extends React.Component {
 
   componentDidMount() {
-    const { setCurrentUser, menuState, setCurrentDayClicked } = this.props;
+    const { setCurrentUser } = this.props;
 
     const userStateChange = auth.onAuthStateChanged( user => {
-      console.log(user);
+      console.log(this);
 
       if(user) {
         //user is signed in
@@ -39,25 +39,25 @@ class App extends React.Component {
     // append/remove add task popup menu
     const { menuState, setCurrentDayClicked } = this.props;
     
-    let toAppend = document.createElement('div');
-    toAppend.appendChild(document.createTextNode('Add task +'));
-    if(menuState === "show")
-      setCurrentDayClicked.appendChild(toAppend);
-      // console.log('menuState = show');
-    else {
-      if(setCurrentDayClicked) {
-        console.log('setCurrentDayClicked is : ');
-        console.log(setCurrentDayClicked);
-        setCurrentDayClicked.removeChild(setCurrentDayClicked.lastChild); 
-      }
+    // let toAppend = document.createElement('div');
+    // toAppend.appendChild(document.createTextNode('Add task +'));
+    // if(menuState === "show")
+    //   setCurrentDayClicked.appendChild(toAppend);
+    //   // console.log('menuState = show');
+    // else {
+    //   if(setCurrentDayClicked) {
+    //     console.log('setCurrentDayClicked is : ');
+    //     console.log(setCurrentDayClicked);
+    //     setCurrentDayClicked.removeChild(setCurrentDayClicked.lastChild); 
+    //   }
      
-    }
+    // }
 
     return (
       <div>
         <HashRouter basename="/">
           <Header/>
-
+          
           <Route exact path='/' component={CalendarDayView}/>
           <Route exact path='/signIn' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<SignInAndUpPage />) } />
         </HashRouter>
