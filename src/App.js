@@ -4,14 +4,11 @@ import {auth} from './firebase/firebaseInit';
 import {connect} from 'react-redux';
 import {setCurrentUser} from './redux/setCurrentUser.action';
 
-
 import Header from './components/header/Header';
 import SignInAndUpPage from './components/header/SignInUp-page';
 import CalendarDayView from './components/days/CalendarDayView';
 
-
 import './App.scss';
-
 
 
 class App extends React.Component {
@@ -20,7 +17,7 @@ class App extends React.Component {
     const { setCurrentUser } = this.props;
 
     const userStateChange = auth.onAuthStateChanged( user => {
-      console.log(this);
+      // console.log('user logged in is: ' + user);
 
       if(user) {
         //user is signed in
@@ -37,7 +34,7 @@ class App extends React.Component {
 
   render() {
     // append/remove add task popup menu
-    const { menuState, setCurrentDayClicked } = this.props;
+    // const { menuState, setCurrentDayClicked } = this.props;
     
     // let toAppend = document.createElement('div');
     // toAppend.appendChild(document.createTextNode('Add task +'));
@@ -46,8 +43,6 @@ class App extends React.Component {
     //   // console.log('menuState = show');
     // else {
     //   if(setCurrentDayClicked) {
-    //     console.log('setCurrentDayClicked is : ');
-    //     console.log(setCurrentDayClicked);
     //     setCurrentDayClicked.removeChild(setCurrentDayClicked.lastChild); 
     //   }
      

@@ -1,11 +1,13 @@
 import React from 'react';
 import newArr from '../../calendarDaysLogic';
 import monthsNames from '../../stuff/monthsNames';
+import {connect} from 'react-redux';
+import TaskBox from '../tasks/TaskBox';
 
 import DivRow from './DivRow';
 
 
-const CalendarDayView = () => {
+const CalendarDayView = ({menuState}) => {
     return (
 
         <div>
@@ -32,8 +34,16 @@ const CalendarDayView = () => {
                 ))
             }  
 
+            {
+                menuState === "show" ? <TaskBox/> : null
+            }
+
         </div>      
     )
 }
 
-export default CalendarDayView;
+const mapStateToProps = ({task}) => ({
+    menuState: task.menuState
+});
+
+export default connect(mapStateToProps)(CalendarDayView);
