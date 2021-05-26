@@ -8,7 +8,7 @@ let days = [];
 while(toDisplay < 3)
 {
     
-  days.push( {day: d.getDay(), date: d.getDate(), month: d.getMonth()} );
+  days.push( {day: d.getDay(), date: d.getDate(), month: d.getMonth(), timestamp: d.getTime()} );
   d.setDate(d.getDate()+1);
 
   if(monthIncrement != d.getMonth())

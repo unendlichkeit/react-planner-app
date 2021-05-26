@@ -28,7 +28,7 @@ const CalendarDayView = ({menuState}) => {
             
             {
                 newArr.map((row, index) => (
-                    <div style={ {display: "flex"} }>
+                    <div key={index} style={ {display: "flex"} }>
                         <div style={{fontSize: '13px', color: 'darkgray'}}>{ monthsNames[row[0].month] }</div>
                         <DivRow key={index} rowData={row} firstLast={ index==0 ? 'first' : index==newArr.length-1 ? 'last' : '' }/>
                     </div>
