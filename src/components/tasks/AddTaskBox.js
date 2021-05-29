@@ -12,6 +12,6 @@ const stateToProps = ({task}) => (
     {
         currentDayClicked: task.setCurrentDayClicked
     }
-);
+); 
 
 export default connect(stateToProps)(AddTaskBox);

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect, batch  } from 'react-redux';
 import { setMenuState, setCurrentDayClicked } from '../../redux/task.actions';
-import AddTaskBox from '../tasks/AddTaskBox';
 
 
 class DayBox extends React.Component {
@@ -10,7 +9,7 @@ class DayBox extends React.Component {
     //ReactDOM.findDOMNode(this)
    
     componentDidUpdate() {
-        console.log('dayBox component mounted');
+        console.log('dayBox component did update');
     }
 
     render() {
@@ -21,9 +20,7 @@ class DayBox extends React.Component {
             
             <div onClick={menuStateAction}>
                 { empty ? '' : <p>Day { day }</p> }
-                { menuState === "show" ? 
-                //if current rendered dayBox is the currentDayClicked, render AddTaskBox
-                <AddTaskBox/> : null  }
+                
                 
             </div>
         )        
@@ -33,14 +30,12 @@ class DayBox extends React.Component {
 
 const stateToProps = ({task}) => (
     {
-        menuState: task.menuState,
         currentDayClicked: task.setCurrentDayClicked
     }
 );
 
 const dispatchToProps = dispatch => ({
     menuStateAction: (event) => {
-        
         batch(()=>{
             dispatch(setMenuState);
             dispatch(setCurrentDayClicked(event.currentTarget));             
