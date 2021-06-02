@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect, batch  } from 'react-redux';
-import { setMenuState, setCurrentDayClicked } from '../../redux/task.actions';
+import { setMenuState, setCurrentDayClicked, setDbDayTimestamp } from '../../redux/task.actions';
+
 
 
 class DayBox extends React.Component {
@@ -13,12 +14,12 @@ class DayBox extends React.Component {
     }
 
     render() {
-        const { menuState, menuStateAction, empty, day, currentDayClicked } = this.props;
+        const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp } = this.props;
         //console.log(currentDayClicked);
         
         return (
             
-            <div onClick={menuStateAction}>
+            <div onClick={(e) => { menuStateAction(e, timestamp); }}>
                 { empty ? '' : <p>Day { day }</p> }
                 
                 
@@ -35,10 +36,11 @@ const stateToProps = ({task}) => (
 );
 
 const dispatchToProps = dispatch => ({
-    menuStateAction: (event) => {
+    menuStateAction: (event, timestamp) => {
         batch(()=>{
             dispatch(setMenuState);
-            dispatch(setCurrentDayClicked(event.currentTarget));             
+            dispatch(setCurrentDayClicked(event.currentTarget));
+            dispatch(setDbDayTimestamp(timestamp));          
         }) 
     }
 });
