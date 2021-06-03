@@ -52,7 +52,7 @@ class App extends React.Component {
       <div>
         <HashRouter basename="/">
           <Header/>
-
+          
           <Route exact path='/' component={CalendarDayView}/>
           <Route exact path='/signIn' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<SignInAndUpPage />) } />
         </HashRouter>

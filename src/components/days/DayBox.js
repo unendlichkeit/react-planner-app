@@ -1,27 +1,47 @@
 import React from 'react';
-import { batch } from 'react-redux';
-import { connect } from 'react-redux';
-import { setMenuState, setCurrentDayClicked } from '../../redux/task.actions';
+import ReactDOM from 'react-dom';
+import { connect, batch  } from 'react-redux';
+import { setMenuState, setCurrentDayClicked, setDbDayTimestamp } from '../../redux/task.actions';
 
 
-const DayBox = ({day, empty, menuStateAction}) => {
-    
-    return (
-        <div onClick={menuStateAction}>
-            {
-                empty ? '' : <p>Day { day }</p>
-            }
-        </div>
-    )
+
+class DayBox extends React.Component {
+    //({day, empty, menuStateAction, menuState}) =>
+    //ReactDOM.findDOMNode(this)
+   
+    componentDidUpdate() {
+        console.log('dayBox component did update');
+    }
+
+    render() {
+        const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp } = this.props;
+        //console.log(currentDayClicked);
+        
+        return (
+            
+            <div onClick={(e) => { menuStateAction(e, timestamp); }}>
+                { empty ? '' : <p>Day { day }</p> }
+                
+                
+            </div>
+        )        
+    }
+
 }
 
+const stateToProps = ({task}) => (
+    {
+        currentDayClicked: task.setCurrentDayClicked
+    }
+);
+
 const dispatchToProps = dispatch => ({
-    menuStateAction: (event) => {
-        
+    menuStateAction: (event, timestamp) => {
         batch(()=>{
             dispatch(setMenuState);
-            dispatch(setCurrentDayClicked(event.currentTarget));             
+            dispatch(setCurrentDayClicked(event.currentTarget));
+            dispatch(setDbDayTimestamp(timestamp));          
         }) 
     }
 });
-export default connect(null, dispatchToProps)(DayBox);
+export default connect(stateToProps, dispatchToProps)(DayBox);

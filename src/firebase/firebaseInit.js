@@ -22,4 +22,6 @@ export const db = firebase.firestore();
 export const auth = firebase.auth();
 export default firebase;
 
-db.collection('tasks').addDocument({});
+export function addTask(dataObject) {
+    db.collection('tasks').add(dataObject);
+}
