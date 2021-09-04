@@ -17,16 +17,13 @@ class DayBox extends React.Component {
 
     render() {
         const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp, allData } = this.props;
-        console.log(timestamp);
-        //retrieve tasks from db
-        newArr.map(row => {( 
-            row.map(rowData => {
-                //console.log(rowData.timestamp); 
-                
-                return rowData.timestamp; 
-            })
-        )});
-        retrieveTask(timestamp).then(result => console.log(result));
+        
+        //retrieve task data from db
+        retrieveTask(timestamp).then(result => { if(result.exists) {
+            console.log(result.data());
+            //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
+            }    
+        });
         //className={`${hasTasksSaved?'hasTask':''}`}
         return (
             
