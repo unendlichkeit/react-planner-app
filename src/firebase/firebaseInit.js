@@ -23,5 +23,11 @@ export const auth = firebase.auth();
 export default firebase;
 
 export function addTask(dataObject) {
-    db.collection('tasks').add(dataObject);
+    //seteaza timestamp-ul ca id pt fiecare document ca sa poata fi identitificat dupa timestamp cand se face retragerea datelor din DB
+    db.collection('tasks').doc(`${dataObject.dayTimestamp}`).set(dataObject);
 }
+
+export function retrieveTask(docTimestamp) {
+    return db.collection('tasks').doc(`${docTimestamp}`).get();
+}
+

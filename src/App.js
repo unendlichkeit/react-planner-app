@@ -1,8 +1,9 @@
 import React from 'react';
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
-import {auth} from './firebase/firebaseInit';
+import {auth, retrieveTask} from './firebase/firebaseInit';
 import {connect} from 'react-redux';
 import {setCurrentUser} from './redux/setCurrentUser.action';
+
 
 import Header from './components/header/Header';
 import SignInAndUpPage from './components/header/SignInUp-page';
@@ -30,6 +31,7 @@ class App extends React.Component {
       }
     });
 
+    
   }
 
   render() {

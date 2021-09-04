@@ -4,7 +4,7 @@ import DayBox from './DayBox';
 import './DayRow.scss';
 
 const DivRow = ({rowData, firstLast}) => {
-    let row = rowData.map(days => (<DayBox key={days.id} day={days.date} timestamp={days.timestamp}/>));
+    let row = rowData.map(days => (<DayBox key={days.id} day={days.date} timestamp={days.timestamp} allData={days}/>));
     const rowLength = row.length; //
 
     if(firstLast === "first") {

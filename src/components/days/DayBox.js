@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect, batch  } from 'react-redux';
 import { setMenuState, setCurrentDayClicked, setDbDayTimestamp } from '../../redux/task.actions';
+import newArr from '../../calendarDaysLogic';
+import {retrieveTask} from '../../firebase/firebaseInit';
 
 
 
@@ -14,15 +16,22 @@ class DayBox extends React.Component {
     }
 
     render() {
-        const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp } = this.props;
-        //console.log(currentDayClicked);
-        
+        const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp, allData } = this.props;
+        console.log(timestamp);
+        //retrieve tasks from db
+        newArr.map(row => {( 
+            row.map(rowData => {
+                //console.log(rowData.timestamp); 
+                
+                return rowData.timestamp; 
+            })
+        )});
+        retrieveTask(timestamp).then(result => console.log(result));
+        //className={`${hasTasksSaved?'hasTask':''}`}
         return (
             
             <div onClick={(e) => { menuStateAction(e, timestamp); }}>
-                { empty ? '' : <p>Day { day }</p> }
-                
-                
+                { empty ? '' : <p >Day { day }</p> }
             </div>
         )        
     }

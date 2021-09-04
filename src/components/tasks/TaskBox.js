@@ -13,11 +13,14 @@ class TaskBox extends React.Component {
         console.log(e.target.querySelector('[name=title]').value);
         let taskDataToDB = {
             dayTimestamp: this.props.dayTimestamp,
-            taskTitle: e.target.querySelector('[name=title]').value
+            taskTitle: e.target.querySelector('[name=title]').value,
+            content: e.target.querySelector('[name=content]').value,
+            
         };
-        //addTask()
+        addTask(taskDataToDB);
     }
 
+                                                                                                                                                                 
     render() {
         return (
             <div className='taskBox'>
@@ -25,6 +28,7 @@ class TaskBox extends React.Component {
                 <div>
                     <form onSubmit={this.addTaskHandler}>
                         <input type="text" name="title"/>
+                        <textarea name="content"></textarea>
                         <input type="submit"/>
                     </form>
                     <p>currentDaySelected node e inutil aici</p>
