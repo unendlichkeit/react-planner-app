@@ -10,3 +10,8 @@ export const setDbDayTimestamp = (timestamp) => ({
     type: "SET_DB_DAY_TIMESTAMP",
     payload: timestamp
 });
+
+export const setHastaskClass = (value) => ({
+    type: "SET_HASTASK_CLASS",
+    payload: value
+});

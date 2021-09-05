@@ -25,7 +25,7 @@ const DivRow = ({rowData, firstLast}) => {
             }
         }
     }
-
+    console.log('divRow rendered');
     return (
         <div className={`divRow ${firstLast}`}>
             {
