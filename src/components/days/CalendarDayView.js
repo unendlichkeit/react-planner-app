@@ -6,42 +6,53 @@ import TaskBox from '../tasks/TaskBox';
 
 import DivRow from './DivRow';
 
+class CalendarDayView extends React.Component {
+    componentDidMount() { console.log('calendarView component did mount'); }
+    componentDidUpdate() { console.log('calendarView component did update'); }
 
-const CalendarDayView = ({menuState}) => {
-    console.log(newArr);
-    return (
+    render() {
+        const {menuState} = this.props;
+        // const CalendarDayView = ({menuState}) => {
+            
+        //     return (
 
-        <div>
             
-            <div className="calendarHeader" style={{display:'flex'}}>
-                <div style={{width: '21px'}}></div>
-                <div style={{display: 'flex', flex: '1', justifyContent: 'space-around'}}>
-                    <div>Su</div>
-                    <div>Mo</div>
-                    <div>Tu</div>
-                    <div>We</div>
-                    <div>Th</div>
-                    <div>Fr</div>
-                    <div>Sa</div>            
-                </div>
-            </div>
+        //     )
+        // }
+        return (
+            <div>
             
-            {
-                newArr.map((row, index) => (
-                    <div key={index} style={ {display: "flex"} }>
-                        <div style={{fontSize: '13px', color: 'darkgray'}}>{ monthsNames[row[0].month] }</div>
-                        <DivRow key={index} rowData={row} firstLast={ index==0 ? 'first' : index==newArr.length-1 ? 'last' : '' }/>
+                <div className="calendarHeader" style={{display:'flex'}}>
+                    <div style={{width: '21px'}}></div>
+                    <div style={{display: 'flex', flex: '1', justifyContent: 'space-around'}}>
+                        <div>Su</div>
+                        <div>Mo</div>
+                        <div>Tu</div>
+                        <div>We</div>
+                        <div>Th</div>
+                        <div>Fr</div>
+                        <div>Sa</div>            
                     </div>
-                ))
-            }  
+                </div>
+                
+                {
+                    newArr.map((row, index) => (
+                        <div key={index} style={ {display: "flex"} }>
+                            <div style={{fontSize: '13px', color: 'darkgray'}}>{ monthsNames[row[0].month] }</div>
+                            <DivRow key={index} rowData={row} firstLast={ index==0 ? 'first' : index==newArr.length-1 ? 'last' : '' }/>
+                        </div>
+                    ))
+                }  
 
-            {
-                menuState === "show" ? <TaskBox/> : null
-            }
+                {
+                    menuState === "show" ? <TaskBox/> : null
+                }
 
-        </div>      
-    )
+            </div>  
+        )
+    };
 }
+
 
 const mapStateToProps = ({task}) => ({
     menuState: task.menuState

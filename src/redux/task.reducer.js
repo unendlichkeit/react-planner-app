@@ -2,7 +2,7 @@ const INITIAL_STATE = {
     menuState: "hidden",
     setCurrentDayClicked: null,
     dayTimestamp: null,
-    hasTask: false
+    hasTask: []
 };
 
 const taskReducer = (state = INITIAL_STATE, action) => {
@@ -28,7 +28,7 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         case "SET_HASTASK_CLASS":
             return  {
                 ...state,
-                hasTask: action.payload
+                hasTask: [...state.hasTask, action.payload]
             };
 
         default:

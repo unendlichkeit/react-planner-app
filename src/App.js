@@ -33,7 +33,9 @@ class App extends React.Component {
 
     
   }
-
+  componentDidMount() {
+      console.log('app component did mount');
+  }
   render() {
     // append/remove add task popup menu
     // const { menuState, setCurrentDayClicked } = this.props;
@@ -49,6 +51,7 @@ class App extends React.Component {
     //   }
      
     // }
+
 
     return (
       <div>

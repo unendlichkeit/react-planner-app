@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect, batch  } from 'react-redux';
 import { setMenuState, setCurrentDayClicked, setDbDayTimestamp, setHastaskClass } from '../../redux/task.actions';
 import {retrieveTask} from '../../firebase/firebaseInit';
+import './DayBox.scss';
 
 
 
@@ -10,32 +11,30 @@ class DayBox extends React.Component {
 
     componentDidMount() {
         console.log('dayBox component did mount');
-    }
-    shouldComponentUpdate() {
-        
-    }
 
+    }
+    componentDidUpdate() { console.log('dayBox component did update'); }
     render() {
         const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp, allData, hasTask, setHasTaskClass } = this.props;
         
         //retrieve task data from db
-        retrieveTask(timestamp).then(result => { if(result.exists) {
-            console.log(result.data());
-            //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
-            setHasTaskClass(true);
-            console.log(this);
+        retrieveTask(timestamp).then(result => { 
+            if(result.exists) {
+                console.log(result.data());
+                //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
+                if(!hasTask.includes(timestamp))
+                {
+                    console.log(hasTask);
+                    setHasTaskClass(result.data().dayTimestamp);
+                }  
+                 
             }
-            // else  { creeaza loop
-            //     setHasTaskClass(false);
-            // }   
         });
-        //className={`${hasTasksSaved?'hasTask':''}`}
         return (
-            
-            <div onClick={(e) => { menuStateAction(e, timestamp); }} className={hasTask ? 'hasTask' : ' '}>
+            <div onClick={(e) => { menuStateAction(e, timestamp); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
                 { empty ? '' : <p >Day { day }</p> }
             </div>
-        )        
+        )
     }
 
 }
