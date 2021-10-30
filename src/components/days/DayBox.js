@@ -9,27 +9,28 @@ import './DayBox.scss';
 
 class DayBox extends React.Component {
 
-    componentDidMount() {
-        console.log('dayBox component did mount');
 
-    }
-    componentDidUpdate() { console.log('dayBox component did update'); }
-    render() {
-        const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp, allData, hasTask, setHasTaskClass } = this.props;
-        
+    componentDidMount() {
+        //console.log('dayBox component did mount');
+        const { timestamp, hasTask, setHasTaskClass } = this.props;
         //retrieve task data from db
         retrieveTask(timestamp).then(result => { 
             if(result.exists) {
-                console.log(result.data());
+                //console.log(result.data());
                 //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
                 if(!hasTask.includes(timestamp))
                 {
-                    console.log(hasTask);
                     setHasTaskClass(result.data().dayTimestamp);
                 }  
                  
             }
         });
+    }
+    // componentDidUpdate() { console.log('dayBox component did update'); }
+    render() {
+        
+        const {timestamp, hasTask, menuState, menuStateAction, empty, day, currentDayClicked, allData} = this.props;
+
         return (
             <div onClick={(e) => { menuStateAction(e, timestamp); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
                 { empty ? '' : <p >Day { day }</p> }
@@ -54,6 +55,6 @@ const dispatchToProps = dispatch => ({
             dispatch(setDbDayTimestamp(timestamp));          
         }) 
     },
-    setHasTaskClass: (value) => dispatch(setHastaskClass(value)) 
+    setHasTaskClass: (value) => { dispatch(setHastaskClass(value)) } 
 });
 export default connect(stateToProps, dispatchToProps)(DayBox);
