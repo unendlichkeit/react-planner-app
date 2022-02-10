@@ -20,12 +20,13 @@ class DayBox extends React.Component {
         //retrieve task data from db
         retrieveTask(timestamp).then(result => { 
             if(result.exists) {
-                console.log(result.data());
+                console.log(result.data(), timestamp);
                 //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
                 if(!hasTask.includes(timestamp))
                 {
-                    console.log(hasTask);
+                    
                     setHasTaskClass(result.data().dayTimestamp);
+                    console.log(hasTask);
                 }  
                  
             }
