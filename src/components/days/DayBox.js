@@ -9,14 +9,10 @@ import './DayBox.scss';
 
 class DayBox extends React.Component {
 
-    componentDidMount() {
-        console.log('dayBox component did mount');
 
-    }
-    componentDidUpdate() { console.log('dayBox component did update'); }
-    render() {
-        const { menuState, menuStateAction, empty, day, currentDayClicked, timestamp, allData, hasTask, setHasTaskClass } = this.props;
-        
+    componentDidMount() {
+        //console.log('dayBox component did mount');
+        const { timestamp, hasTask, setHasTaskClass } = this.props;
         //retrieve task data from db
         retrieveTask(timestamp).then(result => { 
             if(result.exists) {
@@ -31,6 +27,12 @@ class DayBox extends React.Component {
                  
             }
         });
+    }
+    // componentDidUpdate() { console.log('dayBox component did update'); }
+    render() {
+        
+        const {timestamp, hasTask, menuState, menuStateAction, empty, day, currentDayClicked, allData} = this.props;
+
         return (
             <div onClick={(e) => { menuStateAction(e, timestamp); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
                 { empty ? '' : <p >Day { day }</p> }
@@ -55,6 +57,6 @@ const dispatchToProps = dispatch => ({
             dispatch(setDbDayTimestamp(timestamp));          
         }) 
     },
-    setHasTaskClass: (value) => dispatch(setHastaskClass(value)) 
+    setHasTaskClass: (value) => { dispatch(setHastaskClass(value)) } 
 });
 export default connect(stateToProps, dispatchToProps)(DayBox);
