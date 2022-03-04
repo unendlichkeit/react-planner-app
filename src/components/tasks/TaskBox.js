@@ -24,16 +24,18 @@ class TaskBox extends React.Component {
     render() {
         return (
             <div className='taskBox'>
-                <p>add task and stuff</p>
-                <div>
-                    <form onSubmit={this.addTaskHandler}>
-                        <input type="text" name="title"/>
-                        <textarea name="content"></textarea>
-                        <input type="submit"/>
-                    </form>
-                    <p>currentDaySelected node e inutil aici</p>
-                    <p>de setat un prop cu data pt fiecare zi si de bagat prop-ul in TaskBox</p>
-                    <p>add task to component Day and to firebase</p>
+                <div className='taskBoxContent'>
+                    <p>add task and stuff</p>
+                    <div>
+                        <form onSubmit={this.addTaskHandler}>
+                            <input type="text" name="title"/>
+                            <textarea name="content"></textarea>
+                            <input type="submit"/>
+                        </form>
+                        <p>currentDaySelected node e inutil aici</p>
+                        <p>de setat un prop cu data pt fiecare zi si de bagat prop-ul in TaskBox</p>
+                        <p>add task to component Day and to firebase</p>
+                    </div>
                 </div>
             </div>
         );
