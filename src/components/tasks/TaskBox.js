@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { addTask } from '../../firebase/firebaseInit';
+import './TaskBox.scss';
 
 class TaskBox extends React.Component {
     constructor() {
@@ -23,18 +24,20 @@ class TaskBox extends React.Component {
                                                                                                                                                                  
     render() {
         return (
-            <div className='taskBox'>
-                <div className='taskBoxContent'>
-                    <p>add task and stuff</p>
-                    <div>
-                        <form onSubmit={this.addTaskHandler}>
-                            <input type="text" name="title"/>
-                            <textarea name="content"></textarea>
-                            <input type="submit"/>
-                        </form>
-                        <p>currentDaySelected node e inutil aici</p>
-                        <p>de setat un prop cu data pt fiecare zi si de bagat prop-ul in TaskBox</p>
-                        <p>add task to component Day and to firebase</p>
+            <div className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
+                <div className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
+                    <div className="insideWidth">
+                        <p>add task and stuff</p>
+                        <div>
+                            <form onSubmit={this.addTaskHandler}>
+                                <input type="text" name="title" className="w-100"/>
+                                <textarea name="content" className="w-100"></textarea>
+                                <input type="submit"/>
+                            </form>
+                            <p>currentDaySelected node e inutil aici</p>
+                            <p>de setat un prop cu data pt fiecare zi si de bagat prop-ul in TaskBox</p>
+                            <p>add task to component Day and to firebase</p>
+                        </div>
                     </div>
                 </div>
             </div>

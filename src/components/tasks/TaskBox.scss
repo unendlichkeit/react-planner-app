@@ -1,0 +1,17 @@
+.taskBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+    background: rgba(0,0,0,0.5);
+
+    .taskBoxContent {
+        background: #ffffff;
+
+        .insideWidth {
+            flex: 0 1 1800px;
+        }
+    }
+}
