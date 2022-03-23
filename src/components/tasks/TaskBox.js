@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { addTask } from '../../firebase/firebaseInit';
+import { setMenuState } from '../../redux/task.actions';
 import './TaskBox.scss';
 
 class TaskBox extends React.Component {
@@ -24,8 +25,8 @@ class TaskBox extends React.Component {
                                                                                                                                                                  
     render() {
         return (
-            <div className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
-                <div className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
+            <div onClick={(e) => { console.log(e.target); this.props.dispatch(setMenuState) } } className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
+                <div onClick={(e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
                     <div className="insideWidth">
                         <p>add task and stuff</p>
                         <div>
@@ -50,5 +51,8 @@ const stateToProps = (state) => ({
     currentDaySelected: state.task.setCurrentDayClicked,
     dayTimestamp: state.task.dayTimestamp
 });
+//const dispatchToProps = (dispatch) => ({
+
+// });
 
 export default connect(stateToProps)(TaskBox);
