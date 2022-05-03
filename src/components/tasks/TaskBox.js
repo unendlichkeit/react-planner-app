@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { addTask } from '../../firebase/firebaseInit';
 import { setMenuState } from '../../redux/task.actions';
+import monthsNames from '../../stuff/monthsNames';
 import './TaskBox.scss';
 
 class TaskBox extends React.Component {
@@ -24,10 +25,12 @@ class TaskBox extends React.Component {
 
                                                                                                                                                                  
     render() {
+        let currentDaySelected = this.props.currentDaySelected;
         return (
-            <div onClick={(e) => { console.log(e.target); this.props.dispatch(setMenuState) } } className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
+            <div onClick={(e) => { this.props.dispatch(setMenuState) } } className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
                 <div onClick={(e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
                     <div className="insideWidth">
+                        <h3>{monthsNames[currentDaySelected[1].month]}, {currentDaySelected[1].date}</h3>
                         <p>add task and stuff</p>
                         <div>
                             <form onSubmit={this.addTaskHandler}>

@@ -12,13 +12,7 @@ class CalendarDayView extends React.Component {
 
     render() {
         const {menuState} = this.props;
-        // const CalendarDayView = ({menuState}) => {
-            
-        //     return (
-
-            
-        //     )
-        // }
+        console.log(newArr);
         return (
             <div>
             

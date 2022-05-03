@@ -1,9 +1,9 @@
 export const setMenuState = {
     type: "SET_MENU_STATE"
 }
-export const setCurrentDayClicked = (element) => ({
+export const setCurrentDayClicked = (day) => ({
     type: "SET_CURRENT_DAY_CLICKED",
-    payload: element
+    payload: day
 });
 
 export const setDbDayTimestamp = (timestamp) => ({

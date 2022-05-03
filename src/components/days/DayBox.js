@@ -34,7 +34,7 @@ class DayBox extends React.Component {
         const {timestamp, hasTask, menuState, menuStateAction, empty, day, currentDayClicked, allData} = this.props;
 
         return (
-            <div onClick={(e) => { menuStateAction(e, timestamp); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
+            <div onClick={(e) => { menuStateAction(e, timestamp, allData); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
                 { empty ? '' : <p >Day { day }</p> }
             </div>
         )
@@ -50,10 +50,10 @@ const stateToProps = ({task}) => (
 );
 
 const dispatchToProps = dispatch => ({
-    menuStateAction: (event, timestamp) => {
+    menuStateAction: (event, timestamp, allData) => {
         batch(()=>{
             dispatch(setMenuState);
-            dispatch(setCurrentDayClicked(event.currentTarget));
+            dispatch(setCurrentDayClicked([event.currentTarget, allData]));
             dispatch(setDbDayTimestamp(timestamp));          
         }) 
     },
