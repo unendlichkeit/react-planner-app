@@ -1,6 +1,7 @@
 import React from 'react';
-import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
-import {auth, retrieveTask} from './firebase/firebaseInit';
+import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
+import {auth} from './firebase/firebaseInit';
+import {onAuthStateChanged} from 'firebase/auth';
 import {connect} from 'react-redux';
 import {setCurrentUser} from './redux/setCurrentUser.action';
 
@@ -17,7 +18,7 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
-    const userStateChange = auth.onAuthStateChanged( user => {
+    const userStateChange = onAuthStateChanged(auth, user => {
       // console.log('user logged in is: ' + user);
 
       if(user) {
@@ -58,8 +59,10 @@ class App extends React.Component {
         <HashRouter basename="/">
           <Header/>
           
-          <Route exact path='/' component={CalendarDayView}/>
-          <Route exact path='/signIn' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<SignInAndUpPage />) } />
+          <Routes>
+            <Route exact path='/' element={<CalendarDayView/>}/>
+            <Route exact path='/signIn' render={() => this.props.currentUser ? (<Navigate to='/'/>) : (<SignInAndUpPage />) } />
+          </Routes>
         </HashRouter>
       </div>
     );

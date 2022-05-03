@@ -1,6 +1,6 @@
 import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import * as authOptions from 'firebase/auth';
+import * as dbOptions from 'firebase/firestore';
 
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -16,18 +16,24 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
-export const db = firebase.firestore();
-export const auth = firebase.auth();
+// export const db = firebase.firestore();
+// export const auth = firebase.auth();
+export const db = dbOptions.getFirestore(app);
+export const auth = authOptions.getAuth(app);
 export default firebase;
 
-export function addTask(dataObject) {
+export async function addTask(dataObject) {
     //seteaza timestamp-ul ca id pt fiecare document ca sa poata fi identitificat dupa timestamp cand se face retragerea datelor din DB
-    db.collection('tasks').doc(`${dataObject.dayTimestamp}`).set(dataObject);
+    let docRef = await dbOptions.setDoc(dbOptions.doc(db, 'tasks', `${dataObject.dayTimestamp}`), dataObject);
+    // console.log(docRef);
 }
 
-export function retrieveTask(docTimestamp) {
-    return db.collection('tasks').doc(`${docTimestamp}`).get();
+export async function retrieveTask(docTimestamp) {
+    // console.log(dbOptions.collection(db, 'tasks'));
+    // console.log(dbOptions.doc(db, 'tasks', `${docTimestamp}`));
+    let docRef = dbOptions.doc(db, 'tasks', `${docTimestamp}`);
+    return await dbOptions.getDoc( docRef );
 }
 

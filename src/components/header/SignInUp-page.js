@@ -1,13 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../../redux/setCurrentUser.action';
-import { auth, db } from '../../firebase/firebaseInit';
+import { db } from '../../firebase/firebaseInit';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import './signInUp.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class SignInAndUpPage extends React.Component {
+const auth = getAuth();
 
+class SignInAndUpPage extends React.Component {
+    
 
     handleSignUp = async event => {
         event.preventDefault();
@@ -20,13 +24,13 @@ class SignInAndUpPage extends React.Component {
 
         //send form data to firebase and return the user (object) created in firebase authentication section
         if(password === confirmPassword){
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
-            console.log(user);
+            const { user } = await createUserWithEmailAndPassword(auth, email, password);
+            // console.log(user);
             //add user to db firestore too
-            const userDocRef = db.collection('users').doc(user.uid);
+            const userDocRef = doc(db, 'users', user.uid);
             
             const createdAt = new Date();
-            await userDocRef.set({
+            await setDoc(userDocRef, {
                 displayName: user.displayName,
                 email: user.email,
                 createdAt 
@@ -45,7 +49,7 @@ class SignInAndUpPage extends React.Component {
         const password = formElements['password'].value;
 
         document.querySelector('.signInError').textContent = 'loading...';
-         await auth.signInWithEmailAndPassword(email, password).then(result => {
+         await signInWithEmailAndPassword(email, password).then(result => {
             document.querySelector('.signInError').textContent = '';
         }).catch(error => {
             document.querySelector('.signInError').textContent = error.message;
