@@ -49,7 +49,7 @@ class SignInAndUpPage extends React.Component {
         const password = formElements['password'].value;
 
         document.querySelector('.signInError').textContent = 'loading...';
-         await signInWithEmailAndPassword(email, password).then(result => {
+        await signInWithEmailAndPassword(email, password).then(result => {
             document.querySelector('.signInError').textContent = '';
         }).catch(error => {
             document.querySelector('.signInError').textContent = error.message;

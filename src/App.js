@@ -61,7 +61,7 @@ class App extends React.Component {
           
           <Routes>
             <Route exact path='/' element={<CalendarDayView/>}/>
-            <Route exact path='/signIn' render={() => this.props.currentUser ? (<Navigate to='/'/>) : (<SignInAndUpPage />) } />
+            <Route exact path='/signIn' element={this.props.currentUser ? (<Navigate to='/'/>) : (<SignInAndUpPage />)} />
           </Routes>
         </HashRouter>
       </div>

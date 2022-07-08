@@ -6,13 +6,9 @@ import monthsNames from '../../stuff/monthsNames';
 import './TaskBox.scss';
 
 class TaskBox extends React.Component {
-    constructor() {
-        super();
-
-    }
-
     addTaskHandler = (e) => {
         e.preventDefault();
+        let currentUser = this.props.currentUser;
         console.log(e.target.querySelector('[name=title]').value);
         let taskDataToDB = {
             dayTimestamp: this.props.dayTimestamp,
@@ -20,12 +16,20 @@ class TaskBox extends React.Component {
             content: e.target.querySelector('[name=content]').value,
             
         };
-        addTask(taskDataToDB);
+        if((currentUser)) {
+            addTask(taskDataToDB);    
+        }
+        else {
+            //ca masura secundara de 'protectie' impotriva introducerii unui task fara sa fie logat
+            document.querySelector('.errorMsg').innerText = 'You must be logged in';
+        }
+        
     }
 
                                                                                                                                                                  
     render() {
         let currentDaySelected = this.props.currentDaySelected;
+        let currentUser = this.props.currentUser;
         return (
             <div onClick={(e) => { this.props.dispatch(setMenuState) } } className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
                 <div onClick={(e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
@@ -36,7 +40,7 @@ class TaskBox extends React.Component {
                             <form onSubmit={this.addTaskHandler}>
                                 <input type="text" name="title" className="w-100"/>
                                 <textarea name="content" className="w-100"></textarea>
-                                <input type="submit"/>
+                                {currentUser ? <input type="submit"/> : <input type="button" disabled value="You must be signed in to be able to submit a task"/>}
                             </form>
                             <p>currentDaySelected node e inutil aici</p>
                             <p>de setat un prop cu data pt fiecare zi si de bagat prop-ul in TaskBox</p>
@@ -52,7 +56,8 @@ class TaskBox extends React.Component {
 
 const stateToProps = (state) => ({
     currentDaySelected: state.task.setCurrentDayClicked,
-    dayTimestamp: state.task.dayTimestamp
+    dayTimestamp: state.task.dayTimestamp,
+    currentUser: state.user.currentUser
 });
 //const dispatchToProps = (dispatch) => ({
 
