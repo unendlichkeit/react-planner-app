@@ -7,10 +7,11 @@ const Header = ({currentUser}) => {
     //if logged in, add Tasks link
     return (
         <div>
+            <Link className='headerBtns' to='/'>HOME</Link>
             {
                 currentUser ?
                 <div><div onClick={() => auth.signOut()}>SIGN OUT</div><span>{currentUser.email}</span></div> :
-                <Link className='signin' to='/signIn'>SIGN IN</Link>
+                <Link className='headerBtns signin' to='/signIn'>SIGN IN</Link>
             }
         </div>
     )  
