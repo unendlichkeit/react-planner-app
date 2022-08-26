@@ -2,11 +2,12 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {auth} from '../../firebase/firebaseInit';
 import {connect} from 'react-redux';
+import './Header.scss';
 
 const Header = ({currentUser}) => {
     //if logged in, add Tasks link
     return (
-        <div>
+        <div className='headerMenu'>
             <Link className='headerBtns' to='/'>HOME</Link>
             {
                 currentUser ?
