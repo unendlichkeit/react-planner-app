@@ -1,10 +1,10 @@
-.menuLink {
-    display: inline-block;
-    padding: 10px 30px;
-    color: black;
-    text-decoration: none;
-}
-a.menuLink:hover {
-    background: rgba(39, 5, 117, 0.5);
-    color: black;
+.headerMenu {
+    .headerBtns {
+        padding: 5px 20px;
+        border: 1px solid black;
+        color: black;
+        text-decoration: none;
+        margin: 0 20px;
+        display: inline-block;
+    }
 }
