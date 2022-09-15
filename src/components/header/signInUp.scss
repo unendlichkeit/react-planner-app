@@ -13,7 +13,7 @@
     visibility: hidden;
     transition: visibility 1s linear;
 
-    .signInFormBox {
+    .signUpFormBox {
         height: 100%;
         // position: absolute;
         // top: 0;
@@ -41,7 +41,7 @@
     &.show {
         visibility: visible;
 
-        .signInFormBox {
+        .signUpFormBox {
             animation-name: slideUp;
             animation-duration: .5s;
             animation-fill-mode: forwards;

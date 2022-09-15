@@ -16,11 +16,21 @@ class SignInAndUpPage extends React.Component {
     handleSignUp = async event => {
         event.preventDefault();
 
-        const {currentUser} = this.props; //the action
+        //validate form fields on page level
+        const {setCurrentUser} = this.props; //the action
         const formElements = event.target.elements;
-        const email = formElements['email'].value;
-        const password = formElements['password'].value;
-        const confirmPassword = formElements['confirmPassword'].value;
+        const email = formElements.email.value;
+        const password = formElements.password.value;
+        const confirmPassword = formElements.confirmPassword.value;
+        const displayName = formElements.displayName.value;
+       
+        for(let i = 0; i < formElements.length; i++)
+        {
+            if(formElements[i].required && formElements[i].value === '') {
+                console.log(formElements[i]);    
+            }
+            
+        }
 
         //send form data to firebase and return the user (object) created in firebase authentication section
         if(password === confirmPassword){
@@ -45,11 +55,11 @@ class SignInAndUpPage extends React.Component {
                 
 
                 //setCurrentUser
-                currentUser(user);
+                setCurrentUser(user);
             })
             .catch((error) => {
-                console.log(error);
-                document.querySelector('.signInError').textContent = error.message;
+                console.log(error.message);
+                document.querySelector('.signUpError').textContent = error.message;
             });
             
         }
@@ -75,8 +85,8 @@ class SignInAndUpPage extends React.Component {
     }
     showSignIn = event => {
         document.querySelector('.outerFrame').classList.add('show');
-        let signInFormBox = document.querySelector('.signInFormBox');
-        if(!signInFormBox.classList.contains('animateOut')) signInFormBox.classList.add('animateOut');
+        let signUpFormBox = document.querySelector('.signUpFormBox');
+        if(!signUpFormBox.classList.contains('animateOut')) signUpFormBox.classList.add('animateOut');
     }
 
     render() {
@@ -108,15 +118,16 @@ class SignInAndUpPage extends React.Component {
                 <p className='text-center'>or</p>
                 <p className='text-center'><span className='signInBtn' onClick={this.showSignIn}>Sign Up</span></p>
 
-                {/* sign in form */}
+                {/* sign up form */}
                 <div className='outerFrame'>
-                    <div className='signInFormBox'>
+                    <div className='signUpFormBox'>
                         <div className='animationBox'>
                             <div className='signIn-backBtn' onClick={this.hideSignIn}>back</div>
 
                             <Container>
                                 <Row className="justify-content-center">
                                     <Col md="5">
+                                        <p className='signUpError'></p>
                                         <Form className='sign-up-form' onSubmit={this.handleSignUp} noValidate>
                                             <Form.Group>
                                                 <Form.Label>Display name</Form.Label>
@@ -152,7 +163,7 @@ class SignInAndUpPage extends React.Component {
 }
 
 const dispatchToProps = dispatch => ({
-    currentUser: user => dispatch(setCurrentUser(user))
+    setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
 export default connect(null, dispatchToProps)(SignInAndUpPage);
