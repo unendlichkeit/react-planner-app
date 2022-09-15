@@ -1,11 +1,11 @@
-export let d = new Date(new Date().getFullYear(), new Date().getMonth());
+export let d = new Date(new Date().getFullYear(), new Date().getMonth()); //returneaza prima zi din luna curenta
 
 let toDisplay = 0;
 let monthIncrement = d.getMonth();
 // let nrMonthsToDisplay = monthsAdded < 11 ? ;
 let days = [];
 // while(d.getMonth() < nrMonthsToDisplay)
-while(toDisplay < 3)
+while(toDisplay < 1)
 {
     
   days.push( {day: d.getDay(), date: d.getDate(), month: d.getMonth(), timestamp: d.getTime()} );
