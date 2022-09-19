@@ -13,10 +13,9 @@ const auth = getAuth();
 class SignInAndUpPage extends React.Component {
     
 
-    handleSignUp = async event => {
+    handleSignUp = event => {
         event.preventDefault();
 
-        //validate form fields on page level
         const {setCurrentUser} = this.props; //the action
         const formElements = event.target.elements;
         const email = formElements.email.value;
@@ -26,6 +25,7 @@ class SignInAndUpPage extends React.Component {
        
         for(let i = 0; i < formElements.length; i++)
         {
+            //validate form fields on page level
             if(formElements[i].required && formElements[i].value === '') {
                 console.log(formElements[i]);    
             }
@@ -35,7 +35,7 @@ class SignInAndUpPage extends React.Component {
         //send form data to firebase and return the user (object) created in firebase authentication section
         if(password === confirmPassword){
             let user = {};
-            createUserWithEmailAndPassword(auth, email, password)
+            createUserWithEmailAndPassword(auth, email, password, displayName)
             .then((userCredential) => {
                 console.log('user creat?');
                 console.log(userCredential);
@@ -66,15 +66,18 @@ class SignInAndUpPage extends React.Component {
 
     }
 
-    handleSignIn = async event => {
-        event.preventDefault(); console.log('submit triggered');
+    handleSignIn = event => {
+        event.preventDefault(); console.log('sign in submit triggered');
+        const {setCurrentUser} = this.props;
         const formElements = event.target.elements;
         const email = formElements['email'].value;
         const password = formElements['password'].value;
 
         document.querySelector('.signInError').textContent = 'loading...';
-        await signInWithEmailAndPassword(auth, email, password).then(result => {
-            document.querySelector('.signInError').textContent = '';
+        signInWithEmailAndPassword(auth, email, password).then(userCredential => {
+            console.log(userCredential);
+            setCurrentUser(userCredential.user);
+            // document.querySelector('.signInError').textContent = '';
         }).catch(error => {
             document.querySelector('.signInError').textContent = error.message;
         });

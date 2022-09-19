@@ -3,6 +3,7 @@ import newArr from '../../calendarDaysLogic';
 import monthsNames from '../../stuff/monthsNames';
 import {connect} from 'react-redux';
 import TaskBox from '../tasks/TaskBox';
+import MonthPickParent from './monthPickParent';
 
 import DivRow from './DivRow';
 
@@ -41,7 +42,7 @@ class CalendarDayView extends React.Component {
                 {
                     menuState === "show" ? <TaskBox/> : null
                 }
-
+                <MonthPickParent/>
             </div>  
         )
     };
