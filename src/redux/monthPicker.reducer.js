@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-    monthPickState: 'hide'
+    monthPickState: 'hide',
+    monthPicked: []
 }
 
 const monthPickerReducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +11,13 @@ const monthPickerReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 monthPickState: state.monthPickState === 'show' ? 'hide' : 'show'
             };
+
+        case 'SET_MONTH_PICKED':
+            return {
+                ...state,
+                monthPicked: action.payload
+            }
+
         default:
             return state;
     }

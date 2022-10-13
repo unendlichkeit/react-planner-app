@@ -33,7 +33,7 @@ class DayBox extends React.Component {
 
         return (
             <div onClick={(e) => { menuStateAction(e, timestamp, allData); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
-                { empty ? '' : <p >Day { day }</p> }
+                { empty ? '' : <p >{ day }</p> }
             </div>
         )
     }
