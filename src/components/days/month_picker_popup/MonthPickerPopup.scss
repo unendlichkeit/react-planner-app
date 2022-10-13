@@ -1,0 +1,16 @@
+.monthPickerMonthsBox {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 1px solid #dddddd;
+    max-width: 600px;
+
+    .pickrMonth {
+        padding: 9px;
+
+        &:hover {
+            background-color: #dddddd;
+            transition: background-color 0.5s;
+        }
+    }
+}
