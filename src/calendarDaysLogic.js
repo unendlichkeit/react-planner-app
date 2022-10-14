@@ -1,4 +1,4 @@
-export let d = new Date(new Date().getFullYear(), new Date().getMonth()); //returneaza prima zi din luna curenta
+let d = new Date(new Date().getFullYear(), new Date().getMonth()); //returneaza prima zi din luna curenta
 
 let toDisplay = 0;
 let monthIncrement = d.getMonth();
@@ -7,11 +7,11 @@ let days = [];
 // while(d.getMonth() < nrMonthsToDisplay)
 while(toDisplay < 1)
 {
-    
-  days.push( {day: d.getDay(), date: d.getDate(), month: d.getMonth(), timestamp: d.getTime()} );
+  console.log(d.getDate());
+  days.push( { day: d.getDay(), date: d.getDate(), month: d.getMonth(), timestamp: d.getTime(), id: d.getDate()} );
   d.setDate(d.getDate()+1);
-
-  if(monthIncrement != d.getMonth())
+  console.log(days);
+  if(monthIncrement !== d.getMonth())
   {
     monthIncrement = d.getMonth();
     toDisplay++;
@@ -25,7 +25,7 @@ let tempArr = [];
 for(let i =0; i<days.length; i++)
 {
   //set id for each day object 
-  days[i].id = i+1;
+  // days[i].id = i+1;
 
   //if day!=0, push object to temporary array, else push the whole temp array
   if(days[i].day !== 0) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import newArr from '../../calendarDaysLogic';
+// import newArr from '../../calendarDaysLogic';
 import monthsNames from '../../stuff/monthsNames';
 import {connect} from 'react-redux';
 import TaskBox from '../tasks/TaskBox';
@@ -12,7 +12,7 @@ class CalendarDayView extends React.Component {
     componentDidUpdate() { console.log('calendarView component did update'); }
 
     render() {
-        const {menuState} = this.props;
+        const {menuState, newArr} = this.props;
         console.log(newArr);
         return (
             <div>
@@ -34,7 +34,7 @@ class CalendarDayView extends React.Component {
                     newArr.map((row, index) => (
                         <div key={index} style={ {display: "flex"} }>
                             <div style={{fontSize: '13px', color: 'darkgray'}}>{ monthsNames[row[0].month] }</div>
-                            <DivRow key={index} rowData={row} firstLast={ index==0 ? 'first' : index==newArr.length-1 ? 'last' : '' }/>
+                            <DivRow key={index} rowData={row} firstLast={ index===0 ? 'first' : index===newArr.length-1 ? 'last' : '' }/>
                         </div>
                     ))
                 }  
@@ -49,8 +49,9 @@ class CalendarDayView extends React.Component {
 }
 
 
-const mapStateToProps = ({task}) => ({
-    menuState: task.menuState
+const mapStateToProps = ({task, calendar}) => ({
+    menuState: task.menuState,
+    newArr: calendar.calendarView
 });
 
 export default connect(mapStateToProps)(CalendarDayView);

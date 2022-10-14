@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { changeCalendarContent } from '../../../redux/calendar.action';
 import './MonthPickerPopup.scss';
 
 class MonthPickerPopup extends React.Component {
     render() {
-        const {monthPicked, addToMonthSelection} = this.props;
+        const {addToMonthSelection} = this.props;
 
         let currentYear = new Date().getFullYear();
         let optionsList = [];
+        let yearMonthSelections = [];
+
         for(let i = currentYear; i > (currentYear-5); i--) {
             optionsList.push(<option key={currentYear-i} value={i}>{i}</option>);
         }
@@ -15,51 +18,53 @@ class MonthPickerPopup extends React.Component {
         return (
             <div className='monthPickerBox'>
                 Select year:
-                <select onChange={(e) => addToMonthSelection(e, monthPicked)}>
+                <select onChange={(e) => addToMonthSelection(e, yearMonthSelections)}>
                     <option value=''>placeholder</option>
                     {optionsList}
                 </select>
-                <div className='monthPickerMonthsBox' onClick={(e) => addToMonthSelection(e, monthPicked)}>
-                    <div className='pickrMonth' >Jan</div>
-                    <div className='pickrMonth' >Feb</div>
-                    <div className='pickrMonth' >Mar</div>
-                    <div className='pickrMonth' >Apr</div>
-                    <div className='pickrMonth' >May</div>
-                    <div className='pickrMonth' >Jun</div>
-                    <div className='pickrMonth' >Jul</div>
-                    <div className='pickrMonth' >Aug</div>
-                    <div className='pickrMonth' >Sep</div>
-                    <div className='pickrMonth' >Oct</div>
-                    <div className='pickrMonth' >Nov</div>
-                    <div className='pickrMonth' >Dec</div>
+                <div className='monthPickerMonthsBox' onClick={(e) => addToMonthSelection(e, yearMonthSelections)}>
+                    <div className='pickrMonth' data-id='0'>Jan</div>
+                    <div className='pickrMonth' data-id='1'>Feb</div>
+                    <div className='pickrMonth' data-id='2'>Mar</div>
+                    <div className='pickrMonth' data-id='3'>Apr</div>
+                    <div className='pickrMonth' data-id='4'>May</div>
+                    <div className='pickrMonth' data-id='5'>Jun</div>
+                    <div className='pickrMonth' data-id='6'>Jul</div>
+                    <div className='pickrMonth' data-id='7'>Aug</div>
+                    <div className='pickrMonth' data-id='8'>Sep</div>
+                    <div className='pickrMonth' data-id='9'>Oct</div>
+                    <div className='pickrMonth' data-id='10'>Nov</div>
+                    <div className='pickrMonth' data-id='11'>Dec</div>
                 </div>
             </div>
         )
     }
 }
 
-const stateToProps = ({monthPicker}) => ({
-        monthPicked: monthPicker.monthPicked
-    }
-);
+// const stateToProps = ({monthPicker}) => ({
+        
+//     }
+// );
 const dispatchToProps = (dispatch) => ({
-        addToMonthSelection: (e, currentStateOfSelection) => {
+        addToMonthSelection: (e, yearMonthSelections) => {
             if(e.target.nodeName === 'SELECT') {
                 console.log('value of select changed');
                 if(e.target.value) {
-                    currentStateOfSelection[0] = e.target.value;
+                    yearMonthSelections[0] = e.target.value;
                 }
             }
             if(e.target.classList.contains('pickrMonth')) {
-                currentStateOfSelection[1] = e.target.innerText;
+                yearMonthSelections[1] = e.target.dataset.id;
             }
             
             console.log(e.target);
-            console.log(currentStateOfSelection);
+            console.log(yearMonthSelections);
 
-            console.log(currentStateOfSelection.length);
+            if(yearMonthSelections.length === 2 && yearMonthSelections[0]){
+                dispatch(changeCalendarContent(yearMonthSelections[0], yearMonthSelections[1]));
+            }
         }
     }
 );
 
-export default connect(stateToProps, dispatchToProps)(MonthPickerPopup);
+export default connect(null, dispatchToProps)(MonthPickerPopup);
