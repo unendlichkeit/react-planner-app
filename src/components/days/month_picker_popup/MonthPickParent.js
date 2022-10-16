@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setMonthPickerPopupState} from '../../redux/monthPicker.action.js';
-import MonthPickerPopup from './month_picker_popup/MonthPickerPopup';
+import {setMonthPickerPopupState} from '../../../redux/monthPicker.action.js';
+import MonthPickerPopup from './MonthPickerPopup';
 
 class MonthPickParent extends React.Component {
     render() {
