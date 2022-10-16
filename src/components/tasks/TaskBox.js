@@ -14,7 +14,7 @@ class TaskBox extends React.Component {
             dayTimestamp: this.props.dayTimestamp,
             taskTitle: e.target.querySelector('[name=title]').value,
             content: e.target.querySelector('[name=content]').value,
-            
+            // userId: loggedInUserId,
         };
         if((currentUser)) {
             addTask(taskDataToDB);    
@@ -30,6 +30,7 @@ class TaskBox extends React.Component {
     render() {
         let currentDaySelected = this.props.currentDaySelected;
         let currentUser = this.props.currentUser;
+        
         return (
             <div onClick={(e) => { this.props.dispatch(setMenuState) } } className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
                 <div onClick={(e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
