@@ -16,7 +16,7 @@ class CalendarDayView extends React.Component {
         console.log(newArr);
         return (
             <div>
-            
+                <h1>{new Date(newArr[0][0].timestamp).getFullYear()}</h1>
                 <div className="calendarHeader" style={{display:'flex'}}>
                     <div style={{width: '21px'}}></div>
                     <div style={{display: 'flex', flex: '1', justifyContent: 'space-around'}}>

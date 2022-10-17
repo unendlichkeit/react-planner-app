@@ -16,6 +16,7 @@ import './App.scss';
 class App extends React.Component {
 
   componentDidMount() {
+    console.log('app component did mount');
     const { setCurrentUser } = this.props;
 
     const userStateChange = onAuthStateChanged(auth, user => {
@@ -34,9 +35,8 @@ class App extends React.Component {
 
     
   }
-  componentDidMount() {
-      console.log('app component did mount');
-  }
+  
+  
   render() {
     // append/remove add task popup menu
     // const { menuState, setCurrentDayClicked } = this.props;
@@ -63,6 +63,13 @@ class App extends React.Component {
             <Route exact path='/' element={<CalendarDayView/>}/>
             <Route exact path='/signIn' element={this.props.currentUser ? (<Navigate to='/'/>) : (<SignInAndUpPage />)} />
           </Routes>
+          <div>
+            to do:
+            <ul>
+              <li>[monthPicker] cand se selecteaza an si luna, sa se re-randeze doar cand se selecteaza ceva pt ambele;</li>
+              <li></li>
+            </ul>
+          </div>
         </HashRouter>
       </div>
     );

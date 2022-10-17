@@ -43,8 +43,7 @@ class TaskBox extends React.Component {
                                 {currentUser ? <input type="submit"/> : <input type="button" disabled value="You must be signed in to be able to submit a task"/>}
                             </form>
                             <p>currentDaySelected node e inutil aici</p>
-                            <p>de setat un prop cu data pt fiecare zi si de bagat prop-ul in TaskBox</p>
-                            <p>add task to component Day and to firebase</p>
+                            <p>add task to component Day to firebase</p>
                         </div>
                     </div>
                 </div>

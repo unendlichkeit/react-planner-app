@@ -41,10 +41,6 @@ class MonthPickerPopup extends React.Component {
     }
 }
 
-// const stateToProps = ({monthPicker}) => ({
-        
-//     }
-// );
 const dispatchToProps = (dispatch) => ({
         addToMonthSelection: (e, yearMonthSelections) => {
             if(e.target.nodeName === 'SELECT') {
