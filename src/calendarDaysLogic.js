@@ -7,10 +7,10 @@ let days = [];
 // while(d.getMonth() < nrMonthsToDisplay)
 while(toDisplay < 1)
 {
-  console.log(d.getDate());
+  //console.log(d.getDate());
   days.push( { day: d.getDay(), date: d.getDate(), month: d.getMonth(), timestamp: d.getTime(), id: d.getDate()} );
   d.setDate(d.getDate()+1);
-  console.log(days);
+  //console.log(days);
   if(monthIncrement !== d.getMonth())
   {
     monthIncrement = d.getMonth();

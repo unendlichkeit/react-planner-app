@@ -3,7 +3,7 @@ import React from 'react';
 import monthsNames from '../../stuff/monthsNames';
 import {connect} from 'react-redux';
 import TaskBox from '../tasks/TaskBox';
-import MonthPickParent from './MonthPickParent';
+import MonthPickParent from './month_picker_popup/MonthPickParent';
 
 import DivRow from './DivRow';
 
@@ -16,7 +16,7 @@ class CalendarDayView extends React.Component {
         console.log(newArr);
         return (
             <div>
-                <h1>{new Date(newArr[0][0].timestamp).getFullYear()}</h1>
+                <h2>{new Date(newArr[0][0].timestamp).getFullYear()}</h2>
                 <div className="calendarHeader" style={{display:'flex'}}>
                     <div style={{width: '21px'}}></div>
                     <div style={{display: 'flex', flex: '1', justifyContent: 'space-around'}}>
