@@ -7,22 +7,20 @@ import './DayBox.scss';
 
 
 class DayBox extends React.Component {
-    
-
     componentDidMount() {
-        console.log('dayBox component did mount');
-        // console.log(this);
         const { timestamp, hasTask, setHasTaskClass } = this.props;
-        
+        console.log(hasTask);
+        // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
-        retrieveTask(this.timestamp)
+        retrieveTask(timestamp)
         .then(result => { 
-            console.log(retrieveTask(result));
             if(result.exists) {
-                // console.log(result.data(), timestamp);
+                // console.log(hasTask);
                 //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
                 if(!hasTask.includes(timestamp) && result.data())
                 {
+                    
+                    console.log(result.data());
                     setHasTaskClass(result.data().dayTimestamp);
                 }  
                  
@@ -31,21 +29,24 @@ class DayBox extends React.Component {
         .catch(error => console.log(error));
     }
     componentDidUpdate() { 
-        console.log('dayBox component did update'); 
-        // console.log(this);
         const { timestamp, hasTask, setHasTaskClass } = this.props;
+        console.log(hasTask);
+        // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
-        retrieveTask(this.timestamp).then(result => { 
+        retrieveTask(timestamp).then(result => { 
             if(result.exists) {
-                console.log(result.data(), timestamp);
+                // console.log(hasTask);
                 //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
                 if(!hasTask.includes(timestamp) && result.data())
                 {
+                    // console.log(hasTask);
+                    console.log(result.data());
                     setHasTaskClass(result.data().dayTimestamp);
                 }  
                  
             }
-        });
+        })
+        .catch(error => console.log(error));
     }
 
     render() {

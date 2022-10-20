@@ -52,7 +52,13 @@ class App extends React.Component {
     //   }
      
     // }
-
+    const toggleDone = (e) => {
+      if(e.target.nodeName === 'LI') {
+        if(e.target.style.textDecoration === 'line-through')
+          e.target.style.textDecoration = 'none';
+        else e.target.style.textDecoration = 'line-through';
+      }
+    }
 
     return (
       <div>
@@ -65,10 +71,22 @@ class App extends React.Component {
           </Routes>
           <div>
             to do:
-            <ul>
-              <li>[monthPicker] cand se selecteaza an si luna, sa se re-randeze doar cand se selecteaza ceva pt ambele;</li>
-              <li></li>
+            <ul onClick={(e) => toggleDone(e)}>
+              <li>[monthPicker] cand se selecteaza an si luna, sa se re-randeze doar cand se selecteaza ceva pt ambele(?)</li>
+              <li>[task]de adaugat functionalitate pt vizualizat taskurile existente pe o zi</li>
+              <li>[task]de adaugat functionalitate pt sters taskuri</li>
+              <li>[task]de sters campurile odata ce addTask() a terminat si aratat mesaj ca taskul a fost introdus in DB</li>
+              <li>[task]de marcat cu hasTask ziua pt care tocmai s-a creat un task nou</li>
+              <li>[task]de legat taskurile la un user</li>
+              <li>[task]de afisat doar taskurile apartinand userului logat</li>
             </ul>
+            <code>
+              -------------------------------------<br/>
+              Explicatie comportament DayBox cand intalneste zile care contin task:<br/>
+              component mount -> schimba prop -> triggeruieste component update care din nou -> schimba prop -> trigger component update<br/>
+              <br/>
+              component updateul generat de prima schimbare de prop o sa vada propul in aceeasi stare in care a vazut-o component mountul, respectiv evenimentul care a generat acest update => d-asta exista un update care vede propsul cu valoarea veche
+            </code>
           </div>
         </HashRouter>
       </div>

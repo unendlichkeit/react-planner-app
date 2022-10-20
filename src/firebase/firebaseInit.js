@@ -34,6 +34,7 @@ export async function retrieveTask(docTimestamp) {
     // console.log(dbOptions.collection(db, 'tasks'));
     // console.log(dbOptions.doc(db, 'tasks', `${docTimestamp}`));
     let docRef = dbOptions.doc(db, 'tasks', `${docTimestamp}`);
+
     return await dbOptions.getDoc( docRef );
 }
 

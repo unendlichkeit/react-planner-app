@@ -9,15 +9,25 @@ class TaskBox extends React.Component {
     addTaskHandler = (e) => {
         e.preventDefault();
         let currentUser = this.props.currentUser;
-        console.log(e.target.querySelector('[name=title]').value);
+        let taskTitle = e.target.querySelector('[name=title]').value;
+        let taskDescription = e.target.querySelector('[name=content]').value;
+        
         let taskDataToDB = {
             dayTimestamp: this.props.dayTimestamp,
-            taskTitle: e.target.querySelector('[name=title]').value,
-            content: e.target.querySelector('[name=content]').value,
-            // userId: loggedInUserId,
+            taskTitle: taskTitle,
+            content: taskDescription,
+            owner: currentUser.uid,
         };
-        if((currentUser)) {
-            addTask(taskDataToDB);    
+        if(currentUser) {
+            if(taskTitle !== '' && taskDescription !== '') {
+                console.log('conditie ok pt introdus task');
+                document.querySelector('.errorMsg').innerText = '';
+                addTask(taskDataToDB);                
+            }
+            else {
+                console.log('not ok pt introdus task');
+                document.querySelector('.errorMsg').innerText = 'Title and/or description missing';
+            }
         }
         else {
             //ca masura secundara de 'protectie' impotriva introducerii unui task fara sa fie logat
@@ -38,6 +48,7 @@ class TaskBox extends React.Component {
                         <h3>{monthsNames[currentDaySelected[1].month]}, {currentDaySelected[1].date}</h3>
                         <p>add task and stuff</p>
                         <div>
+                            <p className='errorMsg'></p>
                             <form onSubmit={this.addTaskHandler}>
                                 <input type="text" name="title" className="w-100"/>
                                 <textarea name="content" className="w-100"></textarea>
