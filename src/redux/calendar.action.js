@@ -1,6 +1,6 @@
 export const changeCalendarContent = (year, month) => {
     console.log(year, month);
-        let d = new Date(year, month); //returneaza prima zi din luna curenta
+        let d = new Date(year, month); 
     
         let toDisplay = 0;
         let monthIncrement = d.getMonth();

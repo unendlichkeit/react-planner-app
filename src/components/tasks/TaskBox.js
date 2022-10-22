@@ -22,7 +22,13 @@ class TaskBox extends React.Component {
             if(taskTitle !== '' && taskDescription !== '') {
                 console.log('conditie ok pt introdus task');
                 document.querySelector('.errorMsg').innerText = '';
-                addTask(taskDataToDB);                
+                addTask(taskDataToDB)
+                .then((response) => {
+                    console.log(response);
+                    document.querySelector('.errorMsg').style.color = '#28b940';
+                    document.querySelector('.errorMsg').innerText = 'Task added'; 
+                })
+                .catch();
             }
             else {
                 console.log('not ok pt introdus task');
@@ -46,7 +52,10 @@ class TaskBox extends React.Component {
                 <div onClick={(e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
                     <div className="insideWidth">
                         <h3>{monthsNames[currentDaySelected[1].month]}, {currentDaySelected[1].date}</h3>
-                        <p>add task and stuff</p>
+                        <div className='d-flex justify-content-between'>
+                            <p>add task and stuff</p>
+                            <button className='viewTasks'>view tasks</button>
+                        </div>
                         <div>
                             <p className='errorMsg'></p>
                             <form onSubmit={this.addTaskHandler}>

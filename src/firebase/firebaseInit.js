@@ -26,8 +26,19 @@ export default firebase;
 
 export async function addTask(dataObject) {
     //seteaza timestamp-ul ca id pt fiecare document ca sa poata fi identitificat dupa timestamp cand se face retragerea datelor din DB
-    let docRef = await dbOptions.setDoc(dbOptions.doc(db, 'tasks', `${dataObject.dayTimestamp}`), dataObject);
-    // console.log(docRef);
+    let doc = dbOptions.doc(db, 'tasks', `${dataObject.dayTimestamp}`);
+    let docSnap = await dbOptions.getDoc(doc);
+    if(docSnap.exists()) {
+        console.log('doc exista');
+        return await dbOptions.addDoc(dbOptions.collection(doc, dataObject.owner), dataObject);
+    }
+    else {
+        return await dbOptions.setDoc(doc, dataObject);
+    }
+
+    // let col = await dbOptions.doc(db, `tasks/${dataObject.dayTimestamp}`);
+    // console.log(col);
+     
 }
 
 export async function retrieveTask(docTimestamp) {

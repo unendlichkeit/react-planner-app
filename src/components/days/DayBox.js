@@ -8,20 +8,21 @@ import './DayBox.scss';
 
 class DayBox extends React.Component {
     componentDidMount() {
-        const { timestamp, hasTask, setHasTaskClass } = this.props;
-        console.log(hasTask);
+        const { timestamp, hasTask, setHasTaskClass, currentUser } = this.props;
+        // console.log(hasTask);
         // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
         retrieveTask(timestamp)
         .then(result => { 
-            if(result.exists) {
-                // console.log(hasTask);
+            
+            if(result.exists()) {
+                console.log(currentUser.uid);
+                console.log(result.data().owner);
                 //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
                 if(!hasTask.includes(timestamp) && result.data())
                 {
-                    
-                    console.log(result.data());
-                    setHasTaskClass(result.data().dayTimestamp);
+                    if(result.data().owner === currentUser.uid)
+                        setHasTaskClass(result.data().dayTimestamp);
                 }  
                  
             }
@@ -29,24 +30,9 @@ class DayBox extends React.Component {
         .catch(error => console.log(error));
     }
     componentDidUpdate() { 
-        const { timestamp, hasTask, setHasTaskClass } = this.props;
-        console.log(hasTask);
-        // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
-        //retrieve task data from db
-        retrieveTask(timestamp).then(result => { 
-            if(result.exists) {
-                // console.log(hasTask);
-                //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
-                if(!hasTask.includes(timestamp) && result.data())
-                {
-                    // console.log(hasTask);
-                    console.log(result.data());
-                    setHasTaskClass(result.data().dayTimestamp);
-                }  
-                 
-            }
-        })
-        .catch(error => console.log(error));
+        
+        console.log('DayBox did update');
+
     }
 
     render() {
@@ -62,9 +48,9 @@ class DayBox extends React.Component {
 
 }
 
-const stateToProps = ({task}) => (
+const stateToProps = ({task, user}) => (
     {
-        // currentDayClicked: task.setCurrentDayClicked,
+        currentUser: user.currentUser,
         hasTask: task.hasTask
     }
 );

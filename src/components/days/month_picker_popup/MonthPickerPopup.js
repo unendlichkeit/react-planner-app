@@ -53,8 +53,8 @@ const dispatchToProps = (dispatch) => ({
                 yearMonthSelections[1] = e.target.dataset.id;
             }
             
-            console.log(e.target);
-            console.log(yearMonthSelections);
+            // console.log(e.target);
+            // console.log(yearMonthSelections);
 
             if(yearMonthSelections.length === 2 && yearMonthSelections[0]){
                 dispatch(changeCalendarContent(yearMonthSelections[0], yearMonthSelections[1]));
