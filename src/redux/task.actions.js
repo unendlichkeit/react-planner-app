@@ -1,4 +1,4 @@
-export const setMenuState = {
+export const setTaskBoxState = {
     type: "SET_MENU_STATE"
 }
 export const setCurrentDayClicked = (day) => ({

@@ -12,7 +12,7 @@ class CalendarDayView extends React.Component {
     componentDidUpdate() { console.log('calendarView component did update'); }
 
     render() {
-        const {menuState, newArr} = this.props;
+        const {taskBoxState, newArr} = this.props;
         console.log(newArr);
         return (
             <div>
@@ -40,7 +40,7 @@ class CalendarDayView extends React.Component {
                 }  
 
                 {
-                    menuState === "show" ? <TaskBox/> : null
+                    taskBoxState === "show" ? <TaskBox/> : null
                 }
                 <MonthPickParent/>
             </div>  
@@ -50,7 +50,7 @@ class CalendarDayView extends React.Component {
 
 
 const mapStateToProps = ({task, calendar}) => ({
-    menuState: task.menuState,
+    taskBoxState: task.taskBoxState,
     newArr: calendar.calendarView
 });
 

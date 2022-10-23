@@ -1,8 +1,9 @@
 const INITIAL_STATE = {
-    menuState: "hidden",
+    taskBoxState: "hidden",
     setCurrentDayClicked: null,
     dayTimestamp: null,
-    hasTask: []
+    hasTask: [],
+    viewTasksMode: false
 };
 
 const taskReducer = (state = INITIAL_STATE, action) => {
@@ -10,13 +11,13 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         case "SET_MENU_STATE":
             return {
                 ...state,
-                menuState: state.menuState === "hidden" ? "show" : "hidden"
+                taskBoxState: state.taskBoxState === "hidden" ? "show" : "hidden"
             };
 
         case "SET_CURRENT_DAY_CLICKED":
             return {
                 ...state,
-                setCurrentDayClicked: state.menuState === "show" ? action.payload : state.setCurrentDayClicked
+                setCurrentDayClicked: state.taskBoxState === "show" ? action.payload : state.setCurrentDayClicked
             };
 
         case "SET_DB_DAY_TIMESTAMP":
@@ -30,6 +31,12 @@ const taskReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 hasTask: [...state.hasTask, action.payload]
             };
+
+        case "CHANGE_TASK_VIEW":
+            return {
+                ...state,
+                viewTasksMode: state.viewTasksMode ? false : true
+            }    
 
         default:
             return state

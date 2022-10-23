@@ -24,6 +24,7 @@ class App extends React.Component {
 
       if(user) {
         //user is signed in
+        console.log('in app, in mount. user logat');
         setCurrentUser(user)
       }
       else {

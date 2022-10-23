@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, batch  } from 'react-redux';
-import { setMenuState, setCurrentDayClicked, setDbDayTimestamp, setHastaskClass } from '../../redux/task.actions';
+import { setTaskBoxState, setCurrentDayClicked, setDbDayTimestamp, setHastaskClass } from '../../redux/task.actions';
 import {retrieveTask} from '../../firebase/firebaseInit';
 import './DayBox.scss';
 
@@ -9,7 +9,7 @@ import './DayBox.scss';
 class DayBox extends React.Component {
     componentDidMount() {
         const { timestamp, hasTask, setHasTaskClass, currentUser } = this.props;
-        // console.log(hasTask);
+        console.log('daybox mounted');
         // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
         retrieveTask(timestamp)
@@ -58,7 +58,7 @@ const stateToProps = ({task, user}) => (
 const dispatchToProps = dispatch => ({
     menuStateAction: (event, timestamp, allData) => {
         batch(()=>{
-            dispatch(setMenuState);
+            dispatch(setTaskBoxState);
             dispatch(setCurrentDayClicked([event.currentTarget, allData]));
             dispatch(setDbDayTimestamp(timestamp));          
         }) 
