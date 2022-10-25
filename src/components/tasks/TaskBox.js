@@ -6,20 +6,19 @@ import monthsNames from '../../stuff/monthsNames';
 import './TaskBox.scss';
 import ViewTasksBox from './ViewTasksBox';
 import EnterTaskBox from './EnterTaskBox';
+import { changeTaskBoxView } from '../../redux/task.actions';
 
 class TaskBox extends React.Component {
-
-
                                                                                                                                                                  
     render() {
-        let { currentDaySelected, currentUser, viewTasksMode } = this.props;
+        let { currentDaySelected, currentUser, viewTasksMode, handleTaskBoxContent } = this.props;
         
         return (
             <div onClick={(e) => { this.props.dispatch(setTaskBoxState) } } className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
                 <div onClick={(e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
                     <div className="insideWidth">
                         <h3>{monthsNames[currentDaySelected[1].month]}, {currentDaySelected[1].date}</h3>
-                        {viewTasksMode ? <ViewTasksBox /> : <EnterTaskBox/>}
+                        {viewTasksMode ? <ViewTasksBox changeTaskView={handleTaskBoxContent}/> : <EnterTaskBox changeTaskView={handleTaskBoxContent}/>}
                     </div>
                 </div>
             </div>
@@ -34,8 +33,9 @@ const stateToProps = (state) => ({
     currentUser: state.user.currentUser,
     viewTasksMode: state.task.viewTasksMode
 });
-//const dispatchToProps = (dispatch) => ({
+const dispatchToProps = (dispatch) => ({
+    handleTaskBoxContent: () => dispatch(changeTaskBoxView)
+});
 
-// });
 
-export default connect(stateToProps)(TaskBox);
+export default connect(stateToProps, dispatchToProps)(TaskBox);

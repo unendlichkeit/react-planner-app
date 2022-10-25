@@ -40,13 +40,13 @@ class EnterTaskBox extends React.Component {
     }
 
     render() {
-        const { currentUser } = this.props;
+        const { currentUser, changeTaskView } = this.props;
         
         return (
             <div id='enterTaskBox'>
                 <div className='d-flex justify-content-between'>
                     <p>add task and stuff</p>
-                    <button className='taskBoxCTA viewTasks'>view tasks</button>
+                    <button className='taskBoxCTA viewTasks' onClick={changeTaskView}>view tasks</button>
                 </div>
                 <div>
                     <p className='errorMsg'></p>
