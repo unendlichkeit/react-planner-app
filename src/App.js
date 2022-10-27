@@ -80,6 +80,7 @@ class App extends React.Component {
               <li>[task]de marcat cu hasTask ziua pt care tocmai s-a creat un task nou</li>
               <li>[task]de legat taskurile la un user</li>
               <li>[task]de afisat doar taskurile apartinand userului logat</li>
+              <li>updateaza doar componenta care are un prop schimbat</li>
             </ul>
             <code>
               -------------------------------------<br/>

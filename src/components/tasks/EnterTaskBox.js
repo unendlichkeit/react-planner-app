@@ -40,13 +40,16 @@ class EnterTaskBox extends React.Component {
     }
 
     render() {
-        const { currentUser, changeTaskView } = this.props;
-        
+        const { currentUser, changeTaskView, currentDaySelected, hasTask } = this.props;
+        let viewTasksBtn;
+        if(hasTask.includes(currentDaySelected[1].timestamp)) {
+            viewTasksBtn = `<button className='taskBoxCTA viewTasks' onClick=${changeTaskView}>view tasks</button>`;
+        }
         return (
             <div id='enterTaskBox'>
                 <div className='d-flex justify-content-between'>
                     <p>add task and stuff</p>
-                    <button className='taskBoxCTA viewTasks' onClick={changeTaskView}>view tasks</button>
+                    {viewTasksBtn}
                 </div>
                 <div>
                     <p className='errorMsg'></p>
@@ -55,8 +58,6 @@ class EnterTaskBox extends React.Component {
                         <textarea name="content" className="w-100"></textarea>
                         {currentUser ? <input type="submit"/> : <input type="button" disabled value="You must be signed in to be able to submit a task"/>}
                     </form>
-                    <p>currentDaySelected node e inutil aici</p>
-                    <p>add task to component Day to firebase</p>
                 </div>    
             </div>
         )
@@ -65,9 +66,8 @@ class EnterTaskBox extends React.Component {
 
 const stateToProps = (state) => ({
     currentDaySelected: state.task.setCurrentDayClicked,
-    dayTimestamp: state.task.dayTimestamp,
     currentUser: state.user.currentUser,
-    viewTasksMode: state.task.viewTasksMode
+    hasTask: state.task.hasTask
 });
 
 export default connect(stateToProps)(EnterTaskBox);

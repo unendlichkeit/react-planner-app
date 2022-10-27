@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import DayBox from './DayBox';
 
 import './DayRow.scss';
@@ -14,7 +15,7 @@ class DivRow extends React.Component {
     }
 
     render() {
-        const {rowData, firstLast} = this.props;
+        const {rowData, firstLast, currentUser} = this.props;
 
         let row = rowData.map(days => (<DayBox key={days.id} day={days.date} timestamp={days.timestamp} allData={days}/>));
         const rowLength = row.length; //
@@ -41,12 +42,17 @@ class DivRow extends React.Component {
         return (
             <div className={`divRow ${firstLast}`}>
                 {
-                    row
+                    currentUser && row //genereaza componentele din row doar daca exista currentUser. In felul asta, e evitata generarea componentelor DayBox la incarcarea paginii cand currentUser e null (pt ca componentele copii sunt generate inaintea parintelui, iar currentUser e setat in parinte (App), cand acesta e generat)
                 }
             </div>
         )
     }
 } 
 
+const stateToProps = ({user}) => (
+    {
+        currentUser: user.currentUser
+    }
+);
 
-export default DivRow;
+export default connect(stateToProps)(DivRow);

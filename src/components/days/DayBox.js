@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect, batch  } from 'react-redux';
 import { setTaskBoxState, setCurrentDayClicked, setDbDayTimestamp, setHastaskClass } from '../../redux/task.actions';
 import {retrieveTask} from '../../firebase/firebaseInit';
 import './DayBox.scss';
 
 
+function DayBox(props) {
+    const { timestamp, hasTask, menuStateAction, empty, day, allData, setHasTaskClass, currentUser } = props;
+    // const {timestamp, hasTask, menuStateAction, empty, day, allData} = this.props;
 
-class DayBox extends React.Component {
-    componentDidMount() {
-        const { timestamp, hasTask, setHasTaskClass, currentUser } = this.props;
-        console.log('daybox mounted');
+    useEffect(() => {
+        console.log('daybox effect');
+        // console.log(this);
         // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
         retrieveTask(timestamp)
@@ -28,23 +30,24 @@ class DayBox extends React.Component {
             }
         })
         .catch(error => console.log(error));
-    }
-    componentDidUpdate() { 
-        
-        console.log('DayBox did update');
+    });
+    // componentDidUpdate() { 
+    //     const { timestamp, hasTask, setHasTaskClass, currentUser } = this.props;
+    //     console.log('DayBox did update');
+    //     // console.log(this);
 
-    }
+    // }
 
-    render() {
+    
         
-        const {timestamp, hasTask, menuStateAction, empty, day, allData} = this.props;
+    
 
         return (
             <div onClick={(e) => { menuStateAction(e, timestamp, allData); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
                 { empty ? '' : <p >{ day }</p> }
             </div>
         )
-    }
+    
 
 }
 
