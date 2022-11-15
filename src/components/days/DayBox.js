@@ -10,27 +10,27 @@ function DayBox(props) {
     // const {timestamp, hasTask, menuStateAction, empty, day, allData} = this.props;
 
     useEffect(() => {
-        console.log('daybox effect');
+        // console.log('daybox effect');
         // console.log(this);
         // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
-        retrieveTask(timestamp)
+        retrieveTask(timestamp, currentUser.uid)
         .then(result => { 
-            
-            if(result.exists()) {
-                console.log(currentUser.uid);
-                console.log(result.data().owner);
+            console.log(result);
+            // if(result.exists()) {
                 //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
-                if(!hasTask.includes(timestamp) && result.data())
+                // if(!hasTask.includes(timestamp) && result.data())
+                if(!hasTask.includes(timestamp) && result)
                 {
-                    if(result.data().owner === currentUser.uid)
-                        setHasTaskClass(result.data().dayTimestamp);
+                    // if(result.data().owner === currentUser.uid)
+                        // setHasTaskClass(result.data().dayTimestamp);
+                    setHasTaskClass(result);
                 }  
                  
-            }
+            // }
         })
         .catch(error => console.log(error));
-    });
+    }, []);
     // componentDidUpdate() { 
     //     const { timestamp, hasTask, setHasTaskClass, currentUser } = this.props;
     //     console.log('DayBox did update');
@@ -39,14 +39,11 @@ function DayBox(props) {
     // }
 
     
-        
-    
-
-        return (
-            <div onClick={(e) => { menuStateAction(e, timestamp, allData); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
-                { empty ? '' : <p >{ day }</p> }
-            </div>
-        )
+    return (
+        <div onClick={(e) => { menuStateAction(e, timestamp, allData); }} className={ hasTask.includes(timestamp) ? 'hasTask' : '' }>
+            { empty ? '' : <p >{ day }</p> }
+        </div>
+    )
     
 
 }
