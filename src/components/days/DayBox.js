@@ -16,15 +16,15 @@ function DayBox(props) {
         //retrieve task data from db
         retrieveTask(timestamp, currentUser.uid)
         .then(result => { 
-            console.log(result);
+            // console.log(result);
             // if(result.exists()) {
                 //daca documentul cu timestampul dat exista, inseamna ca are task in db si trebuie adaugata clasa pe element
                 // if(!hasTask.includes(timestamp) && result.data())
-                if(!hasTask.includes(timestamp) && result)
+                if(!hasTask.includes(timestamp) && result.docs.length > 0)
                 {
                     // if(result.data().owner === currentUser.uid)
                         // setHasTaskClass(result.data().dayTimestamp);
-                    setHasTaskClass(result);
+                    setHasTaskClass(result.docs[0].data().dayTimestamp);
                 }  
                  
             // }

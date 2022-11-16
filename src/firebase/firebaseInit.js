@@ -32,10 +32,10 @@ export async function addTask(dataObject) {
 export async function retrieveTask(docTimestamp, currentUserId) {
     let collectionRef = dbOptions.collection(db, 'tasks', currentUserId, `${docTimestamp}`);
     const docsSnapshot = await dbOptions.getDocs(collectionRef);
-    if(docsSnapshot.docs.length > 0) {
-        console.log(docTimestamp);
-        return docTimestamp;
-    }
+    // console.log(docsSnapshot.docs[0].data());
+    
+        return docsSnapshot;
+    
     // return await dbOptions.getDoc( docRef );
 }
 
