@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import * as authOptions from 'firebase/auth';
 import * as dbOptions from 'firebase/firestore';
+import { deleteDoc, doc } from 'firebase/firestore';
 
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -25,27 +26,22 @@ export const auth = authOptions.getAuth(app);
 export default firebase;
 
 export async function addTask(dataObject) {
-    //seteaza timestamp-ul ca id pt fiecare document ca sa poata fi identitificat dupa timestamp cand se face retragerea datelor din DB
-    let doc = dbOptions.doc(db, 'tasks', `${dataObject.dayTimestamp}`);
-    let docSnap = await dbOptions.getDoc(doc);
-    if(docSnap.exists()) {
-        console.log('doc exista');
-        return await dbOptions.addDoc(dbOptions.collection(doc, dataObject.owner), dataObject);
-    }
-    else {
-        return await dbOptions.setDoc(doc, dataObject);
-    }
-
-    // let col = await dbOptions.doc(db, `tasks/${dataObject.dayTimestamp}`);
-    // console.log(col);
-     
+    let userIdDocPath = dbOptions.doc(db, 'tasks', dataObject.owner); 
+    return dbOptions.addDoc(dbOptions.collection(userIdDocPath, `${dataObject.dayTimestamp}`), dataObject);   //folosit variabila in template string ca sa transforme valoarea in string 
 }
 
-export async function retrieveTask(docTimestamp) {
-    // console.log(dbOptions.collection(db, 'tasks'));
-    // console.log(dbOptions.doc(db, 'tasks', `${docTimestamp}`));
-    let docRef = dbOptions.doc(db, 'tasks', `${docTimestamp}`);
-
-    return await dbOptions.getDoc( docRef );
+export async function retrieveTask(docTimestamp, currentUserId) {
+    let collectionRef = dbOptions.collection(db, 'tasks', currentUserId, `${docTimestamp}`);
+    const docsSnapshot = await dbOptions.getDocs(collectionRef);
+    // console.log(docsSnapshot.docs[0].data());
+    
+        return docsSnapshot;
+    
+    // return await dbOptions.getDoc( docRef );
 }
 
+export async function deleteTask(docTimestamp, currentUserId, docId) {
+    //document reference is sort of a path to the document
+    const docRef = dbOptions.doc(db, 'tasks', currentUserId, `${docTimestamp}`, docId);
+    return await dbOptions.deleteDoc(docRef);
+}

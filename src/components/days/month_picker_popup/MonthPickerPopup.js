@@ -19,7 +19,6 @@ class MonthPickerPopup extends React.Component {
             <div className='monthPickerBox'>
                 Select year:
                 <select onChange={(e) => addToMonthSelection(e, yearMonthSelections)}>
-                    <option value=''>placeholder</option>
                     {optionsList}
                 </select>
                 <div className='monthPickerMonthsBox' onClick={(e) => addToMonthSelection(e, yearMonthSelections)}>
@@ -50,13 +49,14 @@ const dispatchToProps = (dispatch) => ({
                 }
             }
             if(e.target.classList.contains('pickrMonth')) {
+                yearMonthSelections[0] = document.querySelector('.monthPickerBox select').value;
                 yearMonthSelections[1] = e.target.dataset.id;
             }
             
             // console.log(e.target);
             // console.log(yearMonthSelections);
 
-            if(yearMonthSelections.length === 2 && yearMonthSelections[0]){
+            if(yearMonthSelections.length === 2){
                 dispatch(changeCalendarContent(yearMonthSelections[0], yearMonthSelections[1]));
             }
         }

@@ -10,7 +10,7 @@ class EnterTaskBox extends React.Component {
         let taskDescription = e.target.querySelector('[name=content]').value;
         
         let taskDataToDB = {
-            dayTimestamp: this.props.dayTimestamp,
+            dayTimestamp: this.props.currentDaySelected[1].timestamp,
             taskTitle: taskTitle,
             content: taskDescription,
             owner: currentUser.uid,
@@ -39,17 +39,26 @@ class EnterTaskBox extends React.Component {
         
     }
 
-    render() {
-        const { currentUser, changeTaskView, currentDaySelected, hasTask } = this.props;
-        let viewTasksBtn;
+    componentDidMount() {
+        const { changeTaskView, currentDaySelected, hasTask } = this.props;
+
         if(hasTask.includes(currentDaySelected[1].timestamp)) {
-            viewTasksBtn = `<button className='taskBoxCTA viewTasks' onClick=${changeTaskView}>view tasks</button>`;
+            let button = document.createElement('button');
+            button.setAttribute('class', 'taskBoxCTA viewTasks');
+            button.onclick = changeTaskView;
+            button.innerText = 'View tasks';
+            document.querySelector('#changeContent').appendChild(button);
         }
+    }
+
+    render() {
+        const { currentUser } = this.props;
+        
         return (
             <div id='enterTaskBox'>
                 <div className='d-flex justify-content-between'>
                     <p>add task and stuff</p>
-                    {viewTasksBtn}
+                    <div id='changeContent'></div>
                 </div>
                 <div>
                     <p className='errorMsg'></p>

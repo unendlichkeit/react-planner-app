@@ -11,7 +11,7 @@ class TaskBox extends React.Component {
                                                                                                                                                                  
     render() {
         let { currentDaySelected, viewTasksMode, handleTaskBoxContent, setTaskBoxState } = this.props;
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div onClick={setTaskBoxState} className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
                 <div onClick={ (e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
