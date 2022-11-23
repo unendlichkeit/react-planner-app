@@ -3,7 +3,8 @@ const INITIAL_STATE = {
     setCurrentDayClicked: null,
     dayTimestamp: null,
     hasTask: [],
-    viewTasksMode: false
+    viewTasksMode: false,
+    currentDayTasks: [],
 };
 
 const taskReducer = (state = INITIAL_STATE, action) => {
@@ -36,7 +37,19 @@ const taskReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 viewTasksMode: state.viewTasksMode ? false : true
-            }    
+            };
+        
+        case "SET_CURRENT_DAY_TASKS":
+            return {
+                ...state,
+                currentDayTasks: action.payload
+            };
+
+        case "DELETE_TASK":
+            return {
+                ...state,
+                currentDayTasks: action.payload
+            }
 
         default:
             return state

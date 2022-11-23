@@ -1,40 +1,58 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {retrieveTask} from '../../firebase/firebaseInit';
+import {retrieveTask, deleteTask} from '../../firebase/firebaseInit';
+import ViewTaskDoc from './ViewTaskDoc';
+import { setCurrentDayTasksList, deleteTaskAction } from '../../redux/task.actions';
+
 
 class ViewTasksBox extends React.Component {
+    deleteHandler = (dayTimestamp, currentUserId, docId) => {
+        const { setCurrentDayTasksList } = this.props;
+        console.log('delete');
+        let daysLeft = [];
+        
+        deleteTask(dayTimestamp, currentUserId, docId)
+        .then(result => {
+            console.log(result);
+            retrieveTask(dayTimestamp, currentUserId)
+            .then(result => {
+                result.docs.forEach( (thedoc) => {
+                    console.log(thedoc);
+                    daysLeft.push(<ViewTaskDoc key={thedoc.id} taskTitle={thedoc.data().taskTitle} taskBody={thedoc.data().content} deleteHandler={() => this.deleteHandler(dayTimestamp, currentUserId, thedoc.id)}/>);
+                });
+                setCurrentDayTasksList(daysLeft);
+            })
+            .catch();
+        })
+        .catch(error => console.log(error));
+
+        // deleteTaskAction(daysLeft);
+    };
+
     componentDidMount() {
-        const { currentDaySelected, currentUser } = this.props;
-        console.log(currentDaySelected[1].timestamp);
+        const { currentDaySelected, currentUser, setCurrentDayTasksList } = this.props;
+        // console.log(currentDaySelected[1].timestamp);
+        let tasksList = [];
         retrieveTask(currentDaySelected[1].timestamp, currentUser.uid)
         .then(result => {
-            const fragment = new DocumentFragment();
             result.docs.forEach( (thedoc) => {
-                console.log(thedoc.data());
-                const viewTaskDoc = document.createElement('article');
-                viewTaskDoc.setAttribute('class', 'viewTaskDoc');
-                const viewTaskTitle = document.createElement('h4');
-                viewTaskTitle.setAttribute('class', 'viewTaskTitle');
-                viewTaskTitle.innerText = thedoc.data().taskTitle;
-                viewTaskDoc.appendChild(viewTaskTitle);
-                const viewTaskBody = document.createElement('div');
-                viewTaskBody.setAttribute('class', 'viewTaskBody');
-                viewTaskBody.innerHTML = `<p> ${thedoc.data().content} </p>`;
-                viewTaskDoc.appendChild(viewTaskBody);
-                fragment.append(viewTaskDoc);
+                // console.log(thedoc);
+                tasksList.push(<ViewTaskDoc key={thedoc.id} taskTitle={thedoc.data().taskTitle} taskBody={thedoc.data().content} deleteHandler={() => this.deleteHandler(currentDaySelected[1].timestamp, currentUser.uid, thedoc.id)}/>);
             });
-            document.querySelector('#dbResult').append(fragment);
+            setCurrentDayTasksList(tasksList);
         })
         .catch(error=>console.log(error));
     }
 
     render() {
-        const { changeTaskView } = this.props;
-
+        const { changeTaskView, currentDayTasks } = this.props;
+        console.log(currentDayTasks);
         return (
             <div id='viewTasksParent'>
                 <button className='taskBoxCTA taskBack' onClick={changeTaskView}>back</button>
-                <div id="dbResult"></div>
+                <div id="dbResult">
+                    {currentDayTasks.map(task => task)}
+                </div>
             </div>
         )
     }
@@ -43,6 +61,11 @@ class ViewTasksBox extends React.Component {
 const stateToProps = ({task, user}) => ({
     currentDaySelected: task.setCurrentDayClicked,
     currentUser: user.currentUser,
+    currentDayTasks: task.currentDayTasks
+});
+const dispatchToProps = dispatch => ({
+    setCurrentDayTasksList: (list) => dispatch(setCurrentDayTasksList(list)),
+    deleteTaskAction: (list) => dispatch(deleteTaskAction(list))
 });
 
-export default connect(stateToProps)(ViewTasksBox);
+export default connect(stateToProps, dispatchToProps)(ViewTasksBox);

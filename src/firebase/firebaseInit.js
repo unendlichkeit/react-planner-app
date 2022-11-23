@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import * as authOptions from 'firebase/auth';
 import * as dbOptions from 'firebase/firestore';
+import { deleteDoc, doc } from 'firebase/firestore';
 
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -39,3 +40,8 @@ export async function retrieveTask(docTimestamp, currentUserId) {
     // return await dbOptions.getDoc( docRef );
 }
 
+export async function deleteTask(docTimestamp, currentUserId, docId) {
+    //document reference is sort of a path to the document
+    const docRef = dbOptions.doc(db, 'tasks', currentUserId, `${docTimestamp}`, docId);
+    return await dbOptions.deleteDoc(docRef);
+}
