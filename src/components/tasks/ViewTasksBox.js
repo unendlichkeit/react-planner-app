@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {retrieveTask, deleteTask} from '../../firebase/firebaseInit';
+import {retrieveTask, deleteTask, updateTask} from '../../firebase/firebaseInit';
 import ViewTaskDoc from './ViewTaskDoc';
-import { setCurrentDayTasksList, deleteTaskAction } from '../../redux/task.actions';
+import { setCurrentDayTasksList, deleteTaskAction, enableUpdateTasksList, updateTaskList } from '../../redux/task.actions';
 
 
 class ViewTasksBox extends React.Component {
@@ -13,12 +13,12 @@ class ViewTasksBox extends React.Component {
         
         deleteTask(dayTimestamp, currentUserId, docId)
         .then(result => {
-            console.log(result);
+            // console.log(result);
             retrieveTask(dayTimestamp, currentUserId)
             .then(result => {
                 result.docs.forEach( (thedoc) => {
-                    console.log(thedoc);
-                    daysLeft.push(<ViewTaskDoc key={thedoc.id} taskTitle={thedoc.data().taskTitle} taskBody={thedoc.data().content} deleteHandler={() => this.deleteHandler(dayTimestamp, currentUserId, thedoc.id)}/>);
+                    // console.log(thedoc);
+                    daysLeft.push(<ViewTaskDoc key={thedoc.id} taskId={thedoc.id} taskTitle={thedoc.data().taskTitle} taskBody={thedoc.data().content} deleteHandler={() => this.deleteHandler(dayTimestamp, currentUserId, thedoc.id)} enableUpdateHandler={(e) => this.enableUpdateHandler(thedoc.id, e)} enableEdit={false} updateHandler={() => this.updateTasksList(thedoc.id)}/>);
                 });
                 setCurrentDayTasksList(daysLeft);
             })
@@ -27,7 +27,37 @@ class ViewTasksBox extends React.Component {
         .catch(error => console.log(error));
 
         // deleteTaskAction(daysLeft);
-    };
+    }
+
+    enableUpdateHandler = (docId, e) => {
+        const { currentDayTasks, enableUpdateTasksList } = this.props;
+        let updatedList = [];
+        currentDayTasks.forEach(docComponent => {
+            if(docComponent.key === docId) {
+                updatedList.push({...docComponent, props: {...docComponent.props, enableEdit: true}}) 
+            }
+            else updatedList.push(docComponent);
+        });
+        console.log(updatedList);
+        enableUpdateTasksList(updatedList);
+    }
+
+    updateTasksList = (docId) => {
+        const { currentDaySelected, currentUser, currentDayTasks, updateTaskList } = this.props;
+        let updatedList = [];
+        let newTitleValue = document.querySelector('.viewTaskDoc [name=editTaskTitle]').value;
+        let newBodyValue = document.querySelector('.viewTaskDoc [name=editTaskBody]').value;
+
+        currentDayTasks.forEach(docComponent => {
+            if(docComponent.key === docId) {
+                updatedList.push({...docComponent, props: {...docComponent.props, taskTitle: newTitleValue, taskBody: newBodyValue, enableEdit: false}});
+            }
+            else updatedList.push(docComponent);
+        });
+        updateTaskList(updatedList);
+        updateTask(currentDaySelected[1].timestamp, currentUser.uid, docId, newTitleValue, newBodyValue)
+        .then(result => console.log(result));
+    }
 
     componentDidMount() {
         const { currentDaySelected, currentUser, setCurrentDayTasksList } = this.props;
@@ -37,7 +67,7 @@ class ViewTasksBox extends React.Component {
         .then(result => {
             result.docs.forEach( (thedoc) => {
                 // console.log(thedoc);
-                tasksList.push(<ViewTaskDoc key={thedoc.id} taskTitle={thedoc.data().taskTitle} taskBody={thedoc.data().content} deleteHandler={() => this.deleteHandler(currentDaySelected[1].timestamp, currentUser.uid, thedoc.id)}/>);
+                tasksList.push(<ViewTaskDoc key={thedoc.id} taskId={thedoc.id} taskTitle={thedoc.data().taskTitle} taskBody={thedoc.data().content} deleteHandler={() => this.deleteHandler(currentDaySelected[1].timestamp, currentUser.uid, thedoc.id)} enableUpdateHandler={() => this.enableUpdateHandler(thedoc.id)} enableEdit={false} updateHandler={() => this.updateTasksList(thedoc.id)}/>);
             });
             setCurrentDayTasksList(tasksList);
         })
@@ -65,7 +95,9 @@ const stateToProps = ({task, user}) => ({
 });
 const dispatchToProps = dispatch => ({
     setCurrentDayTasksList: (list) => dispatch(setCurrentDayTasksList(list)),
-    deleteTaskAction: (list) => dispatch(deleteTaskAction(list))
+    deleteTaskAction: (list) => dispatch(deleteTaskAction(list)),
+    enableUpdateTasksList: (list) => dispatch(enableUpdateTasksList(list)),
+    updateTaskList: (list) => dispatch(updateTaskList(list)),
 });
 
 export default connect(stateToProps, dispatchToProps)(ViewTasksBox);

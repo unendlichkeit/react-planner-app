@@ -45,3 +45,8 @@ export async function deleteTask(docTimestamp, currentUserId, docId) {
     const docRef = dbOptions.doc(db, 'tasks', currentUserId, `${docTimestamp}`, docId);
     return await dbOptions.deleteDoc(docRef);
 }
+
+export async function updateTask(docTimestamp, currentUserId, docId, newTitle, newContent) {
+    const docRef = dbOptions.doc(db, 'tasks', currentUserId, `${docTimestamp}`, docId);
+    return await dbOptions.updateDoc(docRef, {taskTitle: newTitle, content: newContent});
+}

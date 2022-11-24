@@ -18,14 +18,24 @@ export const setHastaskClass = (value) => ({
 
 export const changeTaskBoxView = {
     type: 'CHANGE_TASK_VIEW'
-}
+};
 
 export const deleteTaskAction = (currentDayTasksLeft) => ({
     type: 'DELETE_TASK',
     payload: currentDayTasksLeft
-})
+});
 
 export const setCurrentDayTasksList = (tasksList) => ({
     type: 'SET_CURRENT_DAY_TASKS',
     payload: tasksList
-})
+});
+
+export const enableUpdateTasksList = (newList) => ({
+    type: 'ENABLE_UPDATE_TASKS_LIST',
+    payload: newList
+});
+
+export const updateTaskList = (newList) => ({
+    type: 'UPDATE_TASKS_LIST',
+    payload: newList
+});

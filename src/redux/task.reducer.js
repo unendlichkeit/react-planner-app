@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     hasTask: [],
     viewTasksMode: false,
     currentDayTasks: [],
+    editTaskOn: false,
 };
 
 const taskReducer = (state = INITIAL_STATE, action) => {
@@ -49,7 +50,19 @@ const taskReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentDayTasks: action.payload
-            }
+            };
+
+        case "ENABLE_UPDATE_TASKS_LIST":
+            return {
+                ...state,
+                currentDayTasks: action.payload
+            };
+        
+        case "UPDATE_TASKS_LIST":
+            return {
+                ...state,
+                currentDayTasks: action.payload
+            };
 
         default:
             return state

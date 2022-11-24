@@ -85,15 +85,16 @@ class App extends React.Component {
             <code>
               -------------------------------------<br/>
               Explicatie comportament DayBox cand intalneste zile care contin task:<br/>
-              component mount -> schimba prop -> triggeruieste component update care din nou -> schimba prop -> trigger component update<br/>
+              &bull; component mount -> schimba prop -> triggeruieste component update care din nou -> schimba prop -> trigger component update<br/>
               <br/>
-              component updateul generat de prima schimbare de prop o sa vada propul in aceeasi stare in care a vazut-o component mountul, respectiv evenimentul care a generat acest update => d-asta exista un update care vede propsul cu valoarea veche<br/>
+              &bull; component updateul generat de prima schimbare de prop o sa vada propul in aceeasi stare in care a vazut-o component mountul, respectiv evenimentul care a generat acest update => d-asta exista un update care vede propsul cu valoarea veche<br/>
               <br/>
-              Unele DayBox o sa faca mounting, altele doar update pt ca li se schimba valoarea props-ului key:<br/>
-              cheie noua => unmount componenta si mounting una noua;<br/>
-              daca se foloseste indexul in map pt key => nu face re-mount cand se re-rendeaza;<br/>
-              daca se foloseste un id declarat de noi pt key => se face re-mount cand se re-rendeaza;<br/>
-              aceeasi cheie, dar continut modificat => update componenta
+              &bull; Unele DayBox o sa faca mounting, altele doar update pt ca li se schimba valoarea props-ului key:<br/>
+              &bull; cheie noua => unmount componenta si mounting una noua;<br/>
+              &bull; daca se foloseste indexul in map pt key => nu face re-mount cand se re-rendeaza;<br/>
+              &bull; daca se foloseste un id declarat de noi pt key => se face re-mount cand se re-rendeaza;<br/>
+              &bull; aceeasi cheie, dar continut modificat => update componenta<br/>
+              &bull; o componenta nu isi poate schimba singura valorile props-urilor
             </code>
           </div>
         </HashRouter>
