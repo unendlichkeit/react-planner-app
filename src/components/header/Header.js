@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import './Header.scss';
 import { signOut } from "firebase/auth";
 import { setCurrentUser } from '../../redux/setCurrentUser.action';
+import { resetHastaskClass } from '../../redux/task.actions';
 
 const Header = ({currentUser, setCurrentUser}) => {
     //if logged in, add Tasks link
@@ -14,7 +15,7 @@ const Header = ({currentUser, setCurrentUser}) => {
             <Link className='headerBtns' to='/'>HOME</Link>
             {
                 currentUser ?
-                <div><div onClick={() => signOut(auth).then(result => { console.log(result); setCurrentUser(null) }).catch(error=>console.log(error.message))}>SIGN OUT</div><span>{currentUser.email}</span></div> :
+                <div><div onClick={() => signOut(auth).then(result => { setCurrentUser(null) }).catch(error=>console.log(error.message))}>SIGN OUT</div><span>{currentUser.email}</span></div> :
                 <Link className='headerBtns signin' to='/signIn'>SIGN IN</Link>
             }
         </div>
