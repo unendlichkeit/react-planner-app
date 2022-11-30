@@ -35,12 +35,13 @@ export const changeCalendarContent = (year, month) => {
             // console.log(tempArr);
         }
         else {
-            tempArr = [days[i]];
             newArr.push(tempArr);
+            tempArr = [days[i]];
             
         }
         // if(i===days.length-1) newArr.push(tempArr);
         }
+        newArr.push(tempArr);
     
         return {
             type: 'CHANGE_CALENDAR_CONTENT',

@@ -49,10 +49,10 @@ class DivRow extends React.Component {
     }
 } 
 
-const stateToProps = ({user}) => (
-    {
-        currentUser: user.currentUser
-    }
-);
+// const stateToProps = ({user}) => (
+//     {
+//         currentUser: user.currentUser
+//     }
+// );
 
-export default connect(stateToProps)(DivRow);
+export default DivRow;
