@@ -14,7 +14,7 @@ function DayBox(props) {
         // console.log(this);
         // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
-        retrieveTask(timestamp, currentUser.uid)
+        currentUser && retrieveTask(timestamp, currentUser.uid)
         .then(result => { 
             // console.log(result);
             // if(result.exists()) {

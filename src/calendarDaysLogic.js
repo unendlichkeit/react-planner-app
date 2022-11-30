@@ -30,14 +30,17 @@ for(let i =0; i<days.length; i++)
   //if day!=0, push object to temporary array, else push the whole temp array
   if(days[i].day !== 0) {
     tempArr.push(days[i]);
-    // console.log(tempArr);
+    // console.log('tempArr addition: ',days[i]);
   }
   else {
-    tempArr = [days[i]];
     newArr.push(tempArr);
+    tempArr = [days[i]];
+    // console.log('tempArr else day=0: ',days[i],tempArr, newArr);
     
   }
+  
   // if(i===days.length-1) newArr.push(tempArr);
 }
+newArr.push(tempArr);
 
 export default newArr;

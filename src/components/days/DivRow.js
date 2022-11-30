@@ -42,7 +42,7 @@ class DivRow extends React.Component {
         return (
             <div className={`divRow ${firstLast}`}>
                 {
-                    currentUser && row //genereaza componentele din row doar daca exista currentUser. In felul asta, e evitata generarea componentelor DayBox la incarcarea paginii cand currentUser e null (pt ca componentele copii sunt generate inaintea parintelui, iar currentUser e setat in parinte (App), cand acesta e generat)
+                    row 
                 }
             </div>
         )
