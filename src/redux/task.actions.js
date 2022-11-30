@@ -16,6 +16,10 @@ export const setHastaskClass = (value) => ({
     payload: value
 });
 
+export const resetHasTaskClass = {
+    type: 'RESET_HASTASK_CLASS'
+}
+
 export const changeTaskBoxView = {
     type: 'CHANGE_TASK_VIEW'
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {enableUpdateTask} from '../../redux/task.actions';
+import './TaskBox.scss';
 
 
 class ViewTaskDoc extends React.Component {
@@ -13,6 +13,7 @@ class ViewTaskDoc extends React.Component {
                 {enableEdit ? <input name='editTaskTitle' defaultValue={taskTitle}/> : <h4 className="viewTaskTitle">{taskTitle}</h4>}
                 <div className="viewTaskBody">
                     {enableEdit ? <textarea name='editTaskBody' defaultValue={taskBody}/> : <p>{taskBody}</p>}
+                    <hr/>
                     {enableEdit ? <button className="updateTaskBtn" onClick={updateHandler}>Done</button> : <button className="updateTaskBtn" onClick={enableUpdateHandler}>Edit</button>}
                     <button className="deleteTaskBtn" onClick={deleteHandler}>Delete task</button>
                 </div>

@@ -14,4 +14,29 @@
             flex: 0 1 1800px;
         }
     }
+
+    #dbResult {
+        padding-top: 30px;
+
+        article {
+            background-color: beige;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        article:not(:nth-child(1)) {
+            margin-top: 30px;
+        }
+        .updateTaskBtn {
+            background: none;
+            border: 0;
+            margin-right: 30px;
+        }
+        .deleteTaskBtn {
+            border-radius: 7px;
+            color: white;
+            background-color:#f53454;
+            border: none;
+            padding: 5px 10px;
+        }
+    }
 }
