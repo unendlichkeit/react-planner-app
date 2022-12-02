@@ -1,16 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { addTask } from '../../firebase/firebaseInit';
+import { setHastaskClass } from '../../redux/task.actions';
 
 class EnterTaskBox extends React.Component {
     addTaskHandler = (e) => {
         e.preventDefault();
-        let currentUser = this.props.currentUser;
+        let { currentUser, hasTask, currentDaySelected, setHastaskClass } = this.props;
         let taskTitle = e.target.querySelector('[name=title]').value;
         let taskDescription = e.target.querySelector('[name=content]').value;
         
         let taskDataToDB = {
-            dayTimestamp: this.props.currentDaySelected[1].timestamp,
+            dayTimestamp: currentDaySelected[1].timestamp,
             taskTitle: taskTitle,
             content: taskDescription,
             owner: currentUser.uid,
@@ -21,9 +22,10 @@ class EnterTaskBox extends React.Component {
                 document.querySelector('.errorMsg').innerText = '';
                 addTask(taskDataToDB)
                 .then((response) => {
-                    console.log(response);
+                    console.log(currentDaySelected[1].timestamp, hasTask);
                     document.querySelector('.errorMsg').style.color = '#28b940';
                     document.querySelector('.errorMsg').innerText = 'Task added'; 
+                    if(!hasTask.includes(currentDaySelected[1].timestamp)) setHastaskClass(currentDaySelected[1].timestamp);
                 })
                 .catch();
             }
@@ -78,5 +80,8 @@ const stateToProps = (state) => ({
     currentUser: state.user.currentUser,
     hasTask: state.task.hasTask
 });
+const dispatchToProps = dispatch => ({
+    setHastaskClass: (dayTimestamp) => dispatch(setHastaskClass(dayTimestamp))
+});
 
-export default connect(stateToProps)(EnterTaskBox);
+export default connect(stateToProps, dispatchToProps)(EnterTaskBox);
