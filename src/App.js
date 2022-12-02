@@ -70,34 +70,42 @@ class App extends React.Component {
             <Route exact path='/' element={<CalendarDayView/>}/>
             <Route exact path='/signIn' element={this.props.currentUser ? (<Navigate to='/'/>) : (<SignInAndUpPage />)} />
           </Routes>
-          <div>
-            to do:
-            <ul onClick={(e) => toggleDone(e)}>
-              <li>[monthPicker] cand se selecteaza an si luna, sa se re-randeze doar cand se selecteaza ceva pt ambele(?)</li>
-              <li>[task]de adaugat functionalitate pt vizualizat taskurile existente pe o zi</li>
-              <li>[task]de adaugat functionalitate pt sters taskuri</li>
-              <li>[task]de sters campurile odata ce addTask() a terminat si aratat mesaj ca taskul a fost introdus in DB</li>
-              <li>[task]de marcat cu hasTask ziua pt care tocmai s-a creat un task nou</li>
-              <li>[task]de legat taskurile la un user</li>
-              <li>[task]de afisat doar taskurile apartinand userului logat</li>
-              <li>updateaza doar componenta care are un prop schimbat</li>
-            </ul>
-            <code>
-              -------------------------------------<br/>
-              Explicatie comportament DayBox cand intalneste zile care contin task:<br/>
-              &bull; component mount -> schimba prop -> triggeruieste component update care din nou -> schimba prop -> trigger component update<br/>
-              <br/>
-              &bull; component updateul generat de prima schimbare de prop o sa vada propul in aceeasi stare in care a vazut-o component mountul, respectiv evenimentul care a generat acest update => d-asta exista un update care vede propsul cu valoarea veche<br/>
-              <br/>
-              --------------------------------------<br/>
-              &bull; Unele DayBox o sa faca mounting, altele doar update pt ca li se schimba valoarea props-ului key:<br/>
-              &bull; cheie noua => unmount componenta si mounting una noua;<br/>
-              &bull; daca se foloseste indexul in map pt key => nu face re-mount cand se re-rendeaza;<br/>
-              &bull; daca se foloseste un id declarat de noi pt key => se face re-mount cand se re-rendeaza;<br/>
-              &bull; aceeasi cheie, dar continut modificat => update componenta<br/>
-              &bull; o componenta nu isi poate schimba singura valorile props-urilor<br/>
-            </code>
-          </div>
+
+          {
+            /*****
+             * 
+            <div>
+              to do:
+              <ul onClick={(e) => toggleDone(e)}>
+                <li>[monthPicker] cand se selecteaza an si luna, sa se re-randeze doar cand se selecteaza ceva pt ambele(?)</li>
+                <li>[task]de adaugat functionalitate pt vizualizat taskurile existente pe o zi</li>
+                <li>[task]de adaugat functionalitate pt sters taskuri</li>
+                <li>[task]de sters campurile odata ce addTask() a terminat si aratat mesaj ca taskul a fost introdus in DB</li>
+                <li>[task]de marcat cu hasTask ziua pt care tocmai s-a creat un task nou</li>
+                <li>[task]de legat taskurile la un user</li>
+                <li>[task]de afisat doar taskurile apartinand userului logat</li>
+                <li>updateaza doar componenta care are un prop schimbat</li>
+              </ul>
+              <code>
+                -------------------------------------<br/>
+                Explicatie comportament DayBox cand intalneste zile care contin task:<br/>
+                &bull; component mount -> schimba prop -> triggeruieste component update care din nou -> schimba prop -> trigger component update<br/>
+                <br/>
+                &bull; component updateul generat de prima schimbare de prop o sa vada propul in aceeasi stare in care a vazut-o component mountul, respectiv evenimentul care a generat acest update => d-asta exista un update care vede propsul cu valoarea veche<br/>
+                <br/>
+                --------------------------------------<br/>
+                &bull; Unele DayBox o sa faca mounting, altele doar update pt ca li se schimba valoarea props-ului key:<br/>
+                &bull; cheie noua => unmount componenta si mounting una noua;<br/>
+                &bull; daca se foloseste indexul in map pt key => nu face re-mount cand se re-rendeaza;<br/>
+                &bull; daca se foloseste un id declarat de noi pt key => se face re-mount cand se re-rendeaza;<br/>
+                &bull; aceeasi cheie, dar continut modificat => update componenta<br/>
+                &bull; o componenta nu isi poate schimba singura valorile props-urilor<br/>
+              </code>
+            </div>
+             * 
+             */
+          }
+          
         </HashRouter>
       </div>
     );

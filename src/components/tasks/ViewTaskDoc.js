@@ -6,11 +6,12 @@ import './TaskBox.scss';
 class ViewTaskDoc extends React.Component {
     
     render() {
-        const {taskTitle, taskBody, deleteHandler, enableEdit, taskId, updateHandler, enableUpdateHandler} = this.props;
-        console.log(enableEdit);
+        const {taskTitle, taskBody, deleteHandler, enableEdit, taskId, updateHandler, enableUpdateHandler, currentUser} = this.props;
+  
         return (
             <article className="viewTaskDoc">
                 {enableEdit ? <input name='editTaskTitle' defaultValue={taskTitle}/> : <h4 className="viewTaskTitle">{taskTitle}</h4>}
+                <p className="taskOwnerEmail">Introdus de:{currentUser.email}</p>
                 <div className="viewTaskBody">
                     {enableEdit ? <textarea name='editTaskBody' defaultValue={taskBody}/> : <p>{taskBody}</p>}
                     <hr/>

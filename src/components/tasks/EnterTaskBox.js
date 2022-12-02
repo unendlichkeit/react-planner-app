@@ -62,7 +62,7 @@ class EnterTaskBox extends React.Component {
                     <p>add task and stuff</p>
                     <div id='changeContent'></div>
                 </div>
-                <div>
+                <div className="formWrapper">
                     <p className='errorMsg'></p>
                     <form onSubmit={this.addTaskHandler}>
                         <input type="text" name="title" className="w-100"/>
