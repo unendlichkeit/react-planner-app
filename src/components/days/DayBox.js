@@ -10,7 +10,8 @@ function DayBox(props) {
     // const {timestamp, hasTask, menuStateAction, empty, day, allData} = this.props;
 
     useEffect(() => {
-        console.log('daybox effect'); 
+        console.log('daybox effect');
+        console.log(currentUser);
         // console.log(this);
         // console.log(timestamp); //nu a mers prima oara fara console.logul asta. retrieveTask nu returna taskul chiar daca exista in Firestore
         //retrieve task data from db
