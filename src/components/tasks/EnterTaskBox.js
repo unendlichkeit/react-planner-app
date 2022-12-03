@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import { addTask } from '../../firebase/firebaseInit';
 import { setHastaskClass } from '../../redux/task.actions';
 
-class EnterTaskBox extends React.Component {
-    addTaskHandler = (e) => {
+function EnterTaskBox (props) {
+    const { currentUser, changeTaskView, currentDaySelected, hasTask, setHastaskClass } = props;
+
+    const addTaskHandler = (e) => {
         e.preventDefault();
-        let { currentUser, hasTask, currentDaySelected, setHastaskClass } = this.props;
         let taskTitle = e.target.querySelector('[name=title]').value;
         let taskDescription = e.target.querySelector('[name=content]').value;
         
@@ -41,9 +42,8 @@ class EnterTaskBox extends React.Component {
         
     }
 
-    componentDidMount() {
-        const { changeTaskView, currentDaySelected, hasTask } = this.props;
-
+    useEffect(()=> {
+        console.log(hasTask);
         if(hasTask.includes(currentDaySelected[1].timestamp)) {
             let button = document.createElement('button');
             button.setAttribute('class', 'taskBoxCTA viewTasks');
@@ -51,28 +51,25 @@ class EnterTaskBox extends React.Component {
             button.innerText = 'View tasks';
             document.querySelector('#changeContent').appendChild(button);
         }
-    }
+    }, [hasTask]);
 
-    render() {
-        const { currentUser } = this.props;
-        
-        return (
-            <div id='enterTaskBox'>
-                <div className='d-flex justify-content-between'>
-                    <p>add task and stuff</p>
-                    <div id='changeContent'></div>
-                </div>
-                <div>
-                    <p className='errorMsg'></p>
-                    <form onSubmit={this.addTaskHandler}>
-                        <input type="text" name="title" className="w-100"/>
-                        <textarea name="content" className="w-100"></textarea>
-                        {currentUser ? <input type="submit"/> : <input type="button" disabled value="You must be signed in to be able to submit a task"/>}
-                    </form>
-                </div>    
+    return (
+        <div id='enterTaskBox'>
+            <div className='d-flex justify-content-between'>
+                <p>add task and stuff</p>
+                <div id='changeContent'></div>
             </div>
-        )
-    }
+            <div>
+                <p className='errorMsg'></p>
+                <form onSubmit={addTaskHandler}>
+                    <input type="text" name="title" className="w-100"/>
+                    <textarea name="content" className="w-100"></textarea>
+                    {currentUser ? <input type="submit"/> : <input type="button" disabled value="You must be signed in to be able to submit a task"/>}
+                </form>
+            </div>    
+        </div>
+    )
+    
 }
 
 const stateToProps = (state) => ({
