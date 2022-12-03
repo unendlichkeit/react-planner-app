@@ -5,9 +5,10 @@ import {connect} from 'react-redux';
 import './Header.scss';
 import { signOut } from "firebase/auth";
 import { setCurrentUser } from '../../redux/setCurrentUser.action';
-import { resetHastaskClass } from '../../redux/task.actions';
+import { resetHasTaskClass } from '../../redux/task.actions';
 
-const Header = ({currentUser, setCurrentUser}) => {
+
+const Header = ({currentUser, setCurrentUser, resetHasTaskClass}) => {
     //if logged in, add Tasks link
     
     return (
@@ -15,7 +16,9 @@ const Header = ({currentUser, setCurrentUser}) => {
             <Link className='headerBtns' to='/'>HOME</Link>
             {
                 currentUser ?
-                <div><div onClick={() => signOut(auth).then(result => { setCurrentUser(null) }).catch(error=>console.log(error.message))}>SIGN OUT</div><span>{currentUser.email}</span></div> :
+
+                <div><div onClick={() => signOut(auth).then(result => { setCurrentUser(null); resetHasTaskClass() }).catch(error=>console.log(error.message))}>SIGN OUT</div><span>{currentUser.email}</span></div> :
+
                 <Link className='headerBtns signin' to='/signIn'>SIGN IN</Link>
             }
         </div>
@@ -23,7 +26,8 @@ const Header = ({currentUser, setCurrentUser}) => {
 }
 
 const dispatchToProps = dispatch => ({
-    setCurrentUser: user => dispatch(setCurrentUser(user))
+    setCurrentUser: user => dispatch(setCurrentUser(user)),
+    resetHasTaskClass: () => dispatch(resetHasTaskClass),
 });
 
 const mapStateToProps = ({user}) => ({

@@ -33,7 +33,11 @@ const taskReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 hasTask: [...state.hasTask, action.payload]
             };
-
+        case "RESET_HASTASK_CLASS":
+            return {
+                ...state,
+                hasTask: []
+            }
         case "CHANGE_TASK_VIEW":
             return {
                 ...state,

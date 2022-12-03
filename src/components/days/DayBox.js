@@ -31,7 +31,9 @@ function DayBox(props) {
             // }
         })
         .catch(error => console.log(error));
+
     }, [currentUser]);
+
     // componentDidUpdate() { 
     //     const { timestamp, hasTask, setHasTaskClass, currentUser } = this.props;
     //     console.log('DayBox did update');
