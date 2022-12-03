@@ -42,9 +42,7 @@ class DivRow extends React.Component {
         return (
             <div className={`divRow ${firstLast}`}>
                 {
-
                     row 
-
                 }
             </div>
         )

@@ -53,6 +53,7 @@ function EnterTaskBox (props) {
         }
     }, [hasTask]);
 
+
     return (
         <div id='enterTaskBox'>
             <div className='d-flex justify-content-between'>
