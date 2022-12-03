@@ -10,10 +10,10 @@ import EnterTaskBox from './EnterTaskBox';
 class TaskBox extends React.Component {
                                                                                                                                                                  
     render() {
-        let { currentDaySelected, viewTasksMode, handleTaskBoxContent, setTaskBoxState } = this.props;
+        let { currentDaySelected, viewTasksMode, handleTaskBoxContent, setTaskBoxState, changeTaskBoxView } = this.props;
         // console.log(this.props);
         return (
-            <div onClick={setTaskBoxState} className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
+            <div onClick={() => { setTaskBoxState(); changeTaskBoxView(); }} className='taskBox align-items-center flex-column justify-content-center no-gutters row'>
                 <div onClick={ (e) => {e.stopPropagation();} } className='taskBoxContent col-md-8 d-flex justify-content-center p-3'>
                     <div className="insideWidth">
                         <h3>{monthsNames[currentDaySelected[1].month]}, {currentDaySelected[1].date}</h3>
@@ -33,7 +33,8 @@ const stateToProps = (state) => ({
 });
 const dispatchToProps = (dispatch) => ({
     handleTaskBoxContent: () => dispatch(changeTaskBoxView),
-    setTaskBoxState: () => dispatch(setTaskBoxState)
+    setTaskBoxState: () => dispatch(setTaskBoxState),
+    changeTaskBoxView: () => dispatch(changeTaskBoxView)
 });
 
 

@@ -31,7 +31,6 @@ function DayBox(props) {
             // }
         })
         .catch(error => console.log(error));
-
     }, [currentUser]);
 
     // componentDidUpdate() { 
